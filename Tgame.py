@@ -3,7 +3,6 @@ import string
 import time
 import os
 
-print("tetsting")
 #map_rumah
 rumahx, rumahy = 5, 5
 userx, usery = 2, 2
@@ -399,6 +398,7 @@ while True:
     #Random_Kode
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=4))
     
+    print("Halo Riris Sayang :)")
     print(f"Kode masuk :", sandi)
     print("Masukkan kode untuk memulai game.")
     kode=(input("Kode : "))
