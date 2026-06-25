@@ -13,6 +13,7 @@ casx, casy = 4, 4
 respawnC = {}
 w_isi = 10
 pintux, pintuy = 4, 2
+pusing = 0
 
 #map_kebun
 kebunx, kebuny = 11, 5
@@ -78,6 +79,17 @@ wallsk = {
 
 worldpos = "start"
 
+def ldSuk():
+  
+  for i in ["◜", "◠", "◝", "◞", "◡", "◟", "Sukses ✓"]:
+    print(f"\r\033[32m{i}\033[0m", end="", flush=True)
+    time.sleep(0.6)
+
+def ldGal():
+  
+  for i in  ["◜", "◠", "◝", "◞", "◡", "◟", "Kode salah !"]:
+    print(f"\r\033[31m{i}\033[0m", end="", flush=True)
+    time.sleep(0.6)
 
 def wkt(delay=0.5):
   
@@ -88,47 +100,57 @@ def wkt(delay=0.5):
   print()
 wkt()
 
-  
+#FUNGSI RUMAH
 def d_rumah():
-  print(">🏠< Rumah")
-  print(f"♥️  =", Hp,"%  🎒  =", tas, " 🪙 =", gxc)
-  print(f"♣  =", bibit)
-  print("|-----------------------------------|")
+  
+  print(pusing)
+  print("┌─────────┐")
+  print("│🏠│ Rumah│")
+  print("└─────────┘")
+  print("┌─────────────────────────────────┐")
+  print(f"│🔋 :", Hp,"%  🎒  :", tas, " 🪙 :", gxc,"     │")
+  print(f"│🫘 :", bibit,"    ","💫  :","               │")
+  print("└─────────────────────────────────┘")
+  print("│---------------------------------│")
   
   pos = (userx, usery)
   ob = (coinx, coiny)
   if pos == ob:
-    print(" [Brangkas] m untuk masuk »")
+    print("│ [Brangkas] m untuk masuk »      │")
     
   pos = (userx, usery)
   ob = (crafx, crafy)
   if pos == ob:
-    print(" [Kerajinan]")
+    print("│ [Kerajinan]                     │")
     
   pos = (userx, usery)
   ob = (pintux, pintuy)
   if pos == ob:
-    print(" Pintu keluar[kebun] m untuk pergi »")
+    print("│ Exit [kebun] m untuk pergi »    │")
     
   pos = (userx, usery)
   ob = (invx, invy)
   if pos == ob:
-    print(" [Penyimpanan]")
+    print("│ [Penyimpanan]                   │")
     
   pos = (userx, usery)
   ob = (casx, casy)
   if pos == ob:
-    print(" [Energi] m untuk mengisi »")
+    print("│ [Energi] m untuk mengisi »      │")
   
-  print("|-----------------------------------|")
+  print("│---------------------------------│")
+  print(" ")
   
   for y in range(rumahy):
     ln = ""
     for x in range(rumahx):
         
-        
       if (x, y) == (userx, usery):
-        ln += "🔷"
+        if pusing > 0:
+          ln += "😵"
+        else:
+          ln += "😍"
+          
       elif (x, y) == (coinx, coiny):
         ln += "🪙"
       elif (x, y) == (invx, invy):
@@ -145,11 +167,11 @@ def d_rumah():
         ln += "🧱"
       else:
         ln += "⬜"
+        
     print(ln)
     
   
-  
-    
+#FUNGSI KEBUN
 def d_kebun():
   
   print(">🏡< Kebun")
@@ -189,7 +211,7 @@ def d_kebun():
     ln = ""
     for x in range(kebunx):
       if (x, y) == (userx1, usery1):
-        ln += "🔷"
+        ln += "😍"
       elif (x, y) == (pintux1, pintuy1):
         ln += "🚪"
       elif (x, y) == (flagx1, flagy1):
@@ -229,7 +251,7 @@ def d_pasar():
     ln = ""
     for x in range(pasarx):
       if (x, y) == (userxp, useryp):
-        ln += "🔷"
+        ln += "😍"
       elif (x, y) == (bpasarx, bpasary):
         ln += "🔙"
       elif (x, y) in Tokbit:
@@ -433,14 +455,14 @@ while True:
   #START#
   if worldpos == "start":
     #Random_Kode
-    sandi = "".join(random.choices(string.ascii_letters + string.digits, k=4))
+    sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
     print("╔══════════╗")
-    print("║Made In ♥️ ║ 2 0 2 6")
+    print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
     print("╚══════════╝")
-    print(" ")
+    print(" 2  0  2  6 ")
     print("┌───────────┐")
-    print(f"│Kode masuk :", sandi)
+    print(f"│\033[32m {sandi}\033[0m","│")
     print("└───────────┘")
     print(" Masukkan kode untuk memulai game.")
     print(" ")
@@ -449,24 +471,24 @@ while True:
     if kode == sandi or kode == "y":
       print(" Mulai masuk ➟")
       print(" ")
-      wkt()
+      ldSuk()
       worldpos = "Rumah"
       print(" ")
-      print(" Sukses ✓")
       print(" ")
-      input(" ➥ Enter.")
+      input(" ➥ Masuk ! Enter.")
     else:
       print(" Mulai masuk ➟")
       print(" ")
-      wkt()
-      print(" Kode salah !")
-      input(" ➥ Enter.")
+      ldGal()
+      print(" ")
+      print(" ")
+      input(" ➥ Ulangi ! Enter")
     
-  #RUMAH(HOMD)
+  #RUMAH(HOME)
   elif worldpos == "Rumah":
     d_rumah()
     print(" ")
-    cmd=input("perintah :").lower()
+    cmd=input(" ➧ perintah : ").lower()
     
     oldx, oldy = userx, usery
     
@@ -497,7 +519,11 @@ while True:
       usery = rumahy -1
       
     if (userx, usery) in walls:
+      pusing = 3
       userx, usery = oldx, oldy
+    
+    if pusing > 0:
+      pusing -= 1
       
     if cmd == "m":
       pos = (userx, usery)
@@ -540,7 +566,7 @@ while True:
     
     d_kebun()
     print(" ")
-    cmd=input("perintah : ").lower()
+    cmd=input(" ➧ perintah : ").lower()
     
     oldx, oldy = userx1, usery1
     
