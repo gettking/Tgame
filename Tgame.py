@@ -79,6 +79,24 @@ wallsk = {
 
 worldpos = "start"
 
+def ldMbrkgl():
+  
+  for i in ["◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆",  "\033[31mSaldo G-coin kosong !\033[0m"]:
+    print(f"\r{i}", end="", flush=True)
+    time.sleep(0.2)
+
+def ldMbrk():
+  
+  for i in ["◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆",  " "]:
+    print(f"\r{i}", end="", flush=True)
+    time.sleep(0.2)
+
+def ldSwp():
+  
+  for i in ["\033[31m┌\033[0m", "┐", "\033[31m┘\033[0m", "└ ", "\033[31m┌\033[0m", "┐", "\033[31m┘\033[0m", "└ ", "\033[32mSwap G-coin sukses ✓\033[0m"]:
+    print(f"\r{i}", end="", flush=True)
+    time.sleep(0.9)
+
 def ldSuk():
   
   for i in ["◜", "◠", "◝", "◞", "◡", "◟", "Sukses ✓"]:
@@ -102,10 +120,9 @@ wkt()
 
 #FUNGSI RUMAH
 def d_rumah():
-  
-  print(pusing)
+
   print("┌─────────┐")
-  print("│🏠│ Rumah│")
+  print("│🏠\033[32m Rumah\033[0m │")
   print("└─────────┘")
   print("┌─────────────────────────────────┐")
   print(f"│🔋 :", Hp,"%  🎒  :", tas, " 🪙 :", gxc,"     │")
@@ -116,27 +133,27 @@ def d_rumah():
   pos = (userx, usery)
   ob = (coinx, coiny)
   if pos == ob:
-    print("│ [Brangkas] m untuk masuk »      │")
+    print("│ [\033[33mBrangkas\033[0m] m untuk masuk »      │")
     
   pos = (userx, usery)
   ob = (crafx, crafy)
   if pos == ob:
-    print("│ [Kerajinan]                     │")
+    print("│ [\033[33mKerajinan\033[0m]                     │")
     
   pos = (userx, usery)
   ob = (pintux, pintuy)
   if pos == ob:
-    print("│ Exit [kebun] m untuk pergi »    │")
+    print("│ Exit [\033[32mkebun\033[0m] m untuk pergi »    │")
     
   pos = (userx, usery)
   ob = (invx, invy)
   if pos == ob:
-    print("│ [Penyimpanan]                   │")
+    print("│ [\033[33mPenyimpanan\033[0m]                   │")
     
   pos = (userx, usery)
   ob = (casx, casy)
   if pos == ob:
-    print("│ [Energi] m untuk mengisi »      │")
+    print("│ [\033[33mEnergi\033[0m] m untuk mengisi »      │")
   
   print("│---------------------------------│")
   print(" ")
@@ -270,32 +287,41 @@ def coins():
     
     os.system("clear")
     
-    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️▫️ ")
-    print(f" » 1 G-coin =", rate_Gxc, "Gxc")
+    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ")
+    print(f" » 1 G-coin =\033[32m {rate_Gxc}\033[0m Gxc")
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
-    print(f" » G-Coin =", gcoins)
+    print(f" » G-Coin = \033[32m{gcoins}\033[0m")
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
-    print(" n = Exit «")
+    print(" n =\033[31m Exit\033[0m ⇐")
     print(" ")
     
-    cmd=input("Swap G-coin ke Gxc [y or n]")
+    cmd=input("Swap G-coin ke Gxc [y or n]: ")
     
     if cmd == "y":
+  
       
       if gcoins <= 0:
-          print("Saldo G-coin kosong !")
-          input("Tekan Enter...")
+          print(" ")
+          ldMbrkgl()
+          print(" ")
+          print(" ")
+          input(" ➥ Enter.")
           continue
       
+      print(" ")
+      ldMbrk()
       while True:
         
         os.system("clear")
-        
-        print("x untuk kembali «")
-        jswap=(input("Masukkan jumlah or Max : "))
+        print("┌──────────────────┐")
+        print("│x untuk kembali ⇐ │")
+        print("└──────────────────┘")
+        jswap=(input(" ➥ Masukkan jumlah or Max : "))
         
         #BACK
         if jswap == "x":
+          print(" ")
+          ldMbrk()
           break 
         
         if jswap == "max":
@@ -306,39 +332,55 @@ def coins():
             sgxc = float(jswap)
           
           except:
-            print("Input salah !")
-            input("Tekan Enter...")
+            print(" ")
+            print("\033[31mInput salah !\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
             continue
           
         if sgxc <= 0:
-          print("Angka tidak boleh 0 atau minus!")
+          print(" ")
+          print("\033[31mAngka tidak boleh 0 atau minus!\033[0m")
+          print(" ")
+          input(" ➥ Enter.")
           continue
         
         elif sgxc > gcoins:
-          print("jumlah G-coin kurang !")
+          print(" ")
+          print("\033[31mjumlah G-coin kurang !\033[0m")
+          print(" ")
+          input(" ➥ Enter.")
           continue
-        break
-      
-      if jswap == "x":
+        
+        
+        gcoins -= sgxc
+        gxc += sgxc * rate_Gxc
+        
+        gcoins = round(gcoins, 3)
+        gxc = round(gxc, 3)
+        
+        print(" ")
+        ldSwp()
+        print(" ")
+        print(" ")
+        print(f"Token Gxc = \033[33m{gxc}\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
         continue
       
-      gcoins -= sgxc
-      gxc += sgxc * rate_Gxc
       
-      gcoins = round(gcoins, 3)
-      gxc = round(gxc, 3)
-      
-      print(f"Swap G-coin sukses ✓ Token Gxc =", gxc)
-      input("Tekan Enter...")
-    
     elif cmd == "n":
-      print("membatalkan swap(Exit) !")
-      wkt()
+      print(" ")
+      print("membatalkan swap(\033[31mExit\033[0m) !")
+      print(" ")
+      ldMbrk()
       break
     
     else:
-      print("input salah !")
-      input("Enter...")
+      print(" ")
+      print("\033[31minput salah !\033[0m")
+      print(" ")
+      input(" ➥ Enter.")
           
 
 def toko_bibit():
@@ -469,6 +511,7 @@ while True:
     kode=(input("➥ Kode : "))
     
     if kode == sandi or kode == "y":
+      print(" ")
       print(" Mulai masuk ➟")
       print(" ")
       ldSuk()
@@ -537,8 +580,10 @@ while True:
       pos = (userx, usery)
       obj = (coinx, coiny)
       if pos == obj:
+        print(" ")
         print("membuka brankas!")
-        wkt()
+        print(" ")
+        ldMbrk()
         coins()
 
     if cmd == "m":

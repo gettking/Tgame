@@ -1,6 +1,8 @@
 import os
 
-print("Tunggu ya riris ♥️")
+print(" ")
+print("Sakedap ya nyonyot aku ♥️")
+print(" ")
 print("memeriksa update")
 
 os.system("git pull")
