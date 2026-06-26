@@ -22,3 +22,4 @@ else:
 time.sleep(2)
 
 
+os.system("python Tgame.py")
