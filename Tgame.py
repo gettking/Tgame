@@ -14,6 +14,9 @@ respawnC = {}
 w_isi = 10
 pintux, pintuy = 4, 2
 pusing = 0
+casE = 0
+
+
 
 #map_kebun
 kebunx, kebuny = 11, 5
@@ -65,6 +68,7 @@ tas = 0
 gxc = 0
 gcoins = 0
 bibit = 0
+exp = 0
 
 #walls_rumah
 walls = {
@@ -78,6 +82,59 @@ wallsk = {
 }
 
 worldpos = "start"
+
+def ldkb():
+  
+  for i in [
+    " \033[32m▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
+    " \033[32m▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
+    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
+    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
+    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
+    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰\033[0m"
+    ]:
+      print(f"\r{i}", end="", flush=True)
+      time.sleep(0.5)
+
+def ldcasfull():
+  
+  for i in [
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "\033[33mDaya sudah full !\033[0m"
+    ]:
+      print(f"\r{i}", end="", flush=True)
+      time.sleep(0.3)
+
+def ldcas():
+  
+  for i in [
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "» Mengisi Daya «",
+    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    "\033[32mDaya terisi penuh ✓\033[0m"
+    ]:
+      print(f"\r{i}", end="", flush=True)
+      time.sleep(0.3)
 
 def ldMbrkgl():
   
@@ -93,19 +150,19 @@ def ldMbrk():
 
 def ldSwp():
   
-  for i in ["\033[31m┌\033[0m", "┐", "\033[31m┘\033[0m", "└ ", "\033[31m┌\033[0m", "┐", "\033[31m┘\033[0m", "└ ", "\033[32mSwap G-coin sukses ✓\033[0m"]:
-    print(f"\r{i}", end="", flush=True)
-    time.sleep(0.9)
+  for i in [" ━", " ━━", " ━━━", " ━━━━", " ━━━━━", " ━━━━━━", " ━━━━━━━", " ━━━━━━━━", " ━━━━━━━━━", " ━━━━━━━━━━", " Swap Sukses ✓"]:
+    print(f"\r\033[32m{i}\033[0m", end="", flush=True)
+    time.sleep(0.5)
 
 def ldSuk():
   
-  for i in ["◜", "◠", "◝", "◞", "◡", "◟", "Sukses ✓"]:
+  for i in ["◜", "◠", "◝", "◞", "◡", "◟", " Sukses ✓"]:
     print(f"\r\033[32m{i}\033[0m", end="", flush=True)
     time.sleep(0.6)
 
 def ldGal():
   
-  for i in  ["◜", "◠", "◝", "◞", "◡", "◟", "Kode salah !"]:
+  for i in  ["◜", "◠", "◝", "◞", "◡", "◟", " Kode salah !"]:
     print(f"\r\033[31m{i}\033[0m", end="", flush=True)
     time.sleep(0.6)
 
@@ -124,10 +181,11 @@ def d_rumah():
   print("┌─────────┐")
   print("│🏠\033[32m Rumah\033[0m │")
   print("└─────────┘")
-  print("┌─────────────────────────────────┐")
-  print(f"│🔋 :", Hp,"%  🎒  :", tas, " 🪙 :", gxc,"     │")
-  print(f"│🫘 :", bibit,"    ","💫  :","               │")
-  print("└─────────────────────────────────┘")
+  print("┌────────────────────────────┐")
+  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<5}│")
+  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5}│")
+  print("└────────────────────────────┘")
+  
   print("│---------------------------------│")
   
   pos = (userx, usery)
@@ -163,7 +221,9 @@ def d_rumah():
     for x in range(rumahx):
         
       if (x, y) == (userx, usery):
-        if pusing > 0:
+        if casE > 0:
+          ln += "⚡"
+        elif pusing > 0:
           ln += "😵"
         else:
           ln += "😍"
@@ -191,9 +251,16 @@ def d_rumah():
 #FUNGSI KEBUN
 def d_kebun():
   
-  print(">🏡< Kebun")
-  print(f"♥️  =", Hp,"%  🎒 =", tas, " 🪙 =", gxc)
-  print(f"♣  =", bibit)
+  print("┌─────────┐")
+  print("│🏡\033[32m Kebun\033[0m │")
+  print("└─────────┘")
+  
+  
+  print("┌────────────────────────────┐")
+  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<5}│")
+  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5}│")
+  print("└────────────────────────────┘")
+  
   print("|-----------------------------------|")
   
   pos = (userx1, usery1)
@@ -204,7 +271,7 @@ def d_kebun():
   pos = (userx1, usery1)
   ob = k_lahan
   if pos in ob:
-    print(" [Area lahan]\np untuk menanam.\nx untuk menebang. ")
+    print(" [\033[32mArea lahan\033[0m]\n p untuk menanam.\n x untuk menebang. ")
     
   pos = (userx1, usery1)
   ob = pohon1
@@ -227,8 +294,13 @@ def d_kebun():
   for y in range(kebuny):
     ln = ""
     for x in range(kebunx):
+      
       if (x, y) == (userx1, usery1):
-        ln += "😍"
+        if pusing > 0:
+          ln += "😵"
+        else:
+          ln += "😍"
+        
       elif (x, y) == (pintux1, pintuy1):
         ln += "🚪"
       elif (x, y) == (flagx1, flagy1):
@@ -287,11 +359,11 @@ def coins():
     
     os.system("clear")
     
-    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ")
+    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(f" » 1 G-coin =\033[32m {rate_Gxc}\033[0m Gxc")
-    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
-    print(f" » G-Coin = \033[32m{gcoins}\033[0m")
-    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
+    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
+    print(f" » G-Coin   = \033[32m{gcoins}\033[0m")
+    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(" n =\033[31m Exit\033[0m ⇐")
     print(" ")
     
@@ -363,7 +435,7 @@ def coins():
         ldSwp()
         print(" ")
         print(" ")
-        print(f"Token Gxc = \033[33m{gxc}\033[0m")
+        print(f" Token Gxc = \033[33m{gxc}\033[0m")
         print(" ")
         input(" ➥ Enter.")
         continue
@@ -520,6 +592,7 @@ while True:
       print(" ")
       input(" ➥ Masuk ! Enter.")
     else:
+      print(" ")
       print(" Mulai masuk ➟")
       print(" ")
       ldGal()
@@ -538,9 +611,10 @@ while True:
     #testing
     if cmd == "p":
       worldpos = "pasar"
-      
     if cmd == "u":
       worldpos = "start"
+    if cmd == "k":
+      worldpos = "kebun"
     
     if cmd == "w":
       usery -= 1
@@ -562,18 +636,26 @@ while True:
       usery = rumahy -1
       
     if (userx, usery) in walls:
-      pusing = 3
       userx, usery = oldx, oldy
-    
+      pusing = 3
     if pusing > 0:
       pusing -= 1
+      
+    if (userx, usery) == (casx, casy):
+      casE = 2
+      
+    if casE > 0:
+      casE -= 1
+    
       
     if cmd == "m":
       pos = (userx, usery)
       obj = (pintux, pintuy)
       if (userx, usery) == (pintux, pintuy):
-        print("Pergi menuju kebun »")
-        wkt()
+        print(" ")
+        print(" Pergi menuju kebun »")
+        print(" ")
+        ldkb()
         worldpos = "kebun"
       
     if cmd == "m":
@@ -591,21 +673,24 @@ while True:
       obj = (casx, casy)
       if pos == obj:
         if Hp < 100:
-            print("» Memulai mengisi daya «")
-            wkt()
+            print(" ")
+            ldcas()
+            print(" ")
+            print(" ")
+            input(" ➥ Enter.")
             Hp = 100
             
             if casx is not None and (userx, usery) == (casx, casy):
               casx, casy = None, None
               respawnC[userx, usery] = nowC + w_isi
-              print("Sukses ✓")
-
+              
         elif Hp == 100:
-          print("» Memulai mengisi daya «")
-          wkt()
-          print("Daya sepertinya penuh!")
-          input("Tekan Enter...")
-        
+          print(" ")
+          ldcasfull()
+          print(" ")
+          print(" ")
+          input(" ➥ Enter.")
+  
   #KEBUN
   elif worldpos == "kebun":
     
@@ -636,6 +721,10 @@ while True:
       
     if (userx1, usery1) in wallsk:
       userx1, usery1 = oldx, oldy
+      pusing = 3
+      
+    if pusing > 0:
+      pusing -= 1
   
     #PART_menanam pohon t.1
     if cmd == "p":
@@ -645,28 +734,39 @@ while True:
       pt = pohon_tanam
       if pos in obj:
         if pos in tm or pos in pt:
-          print("Sudah ada tanaman !")
-          input("Enter...")
-        elif Hp >= 2.5:
+          print(" ")
+          print(" \033[33mSudah ada tanaman !\033[0m")
+          print(" ")
+          input(" ➥ Enter.")
+        elif Hp >= 2:
           if bibit >= 1:
-            print("mulai menanam . . .")
-            Hp -= 2.5
+            print(" ")
+            print(" mulai menanam.")
+            print(" ")
+            Hp -= 2
             wkt()
             bibit -= 1
             tas -= 2
             tanam.add((userx1, usery1))
-            print("sukses menanam ✓")
-            input("Tekan Enter...")
+            print(" \033[32mSukses menanam ✓\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
             respawnT[userx1, usery1] = nowT + wt_tanam
           else:
-            print("Bibit tidak ada!!!")
-            input("Tekan Enter...")
+            print(" ")
+            print(" \033[31mBibit tidak ada!!!\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
         else:
-          print("♥️ = 🔋")
-          input("Enter...")
+          print(" ")
+          print(" ♥️ = 🔋")
+          print(" ")
+          input(" ➥ Enter.")
       else:
-        print("Hanya bisa dilahan menanam!")
-        input("Tekan Enter...")
+        print(" ")
+        print(" \033[31mHanya bisa dilahan menanam!\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
         
     #PART_menebang
     if cmd == "x":
@@ -675,36 +775,48 @@ while True:
       tm = tanam
       pt = pohon_tanam
       if pos in tm:
-        print("Pohon masih muda !")
-        input("Enter...")
+        print(" ")
+        print(" \033[33mPohon masih muda !\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
       
       if pos in kbn:
-        print("Hanya bisa dilahan menanam!")
+        print(" ")
+        print(" \033[33mHanya bisa dilahan menanam!\033[0m")
         
       elif pos in pt:
-        if Hp >= 2.5:
-          print("mulai menebang . . .")
+        if Hp >= 2:
+          print(" ")
+          print(" Mulai menebang.")
+          print(" ")
           wkt()
-          Hp -= 2.5
+          Hp -= 2
           pohon_tanam.remove(pos)
           gxc += 19
           gxc = round(gxc, 3)
-          print("menebang sukses ✓")
-          input("Tekan Enter...")
+          print(" Menebang sukses ✓")
+          print(" ")
+          input(" ➥ Enter.")
         else:
-          print("♥️ = 🔋")
-          input("Enter...")
+          print(" ")
+          print(" ♥️ = 🔋")
+          print(" ")
+          input(" ➥ Enter.")
       else:
-        print("Tidak ada objek tanaman!")
-        input("Tekan Enter...")
+        print(" ")
+        print(" Tidak ada objek tanaman!")
+        print(" ")
+        input(" ➥ Enter.")
     
     #PART_kembali kerumah
     if cmd == "m":
       pos = (userx1, usery1)
       obj = (pintux1, pintuy1)
       if pos == obj:
-        print("Masuk ke dalam Rumah «")
-        wkt()
+        print(" ")
+        print(" Masuk ke dalam Rumah «")
+        print(" ")
+        ldkb()
         worldpos = "Rumah"
     
     #PART_pergi kepasar
@@ -712,8 +824,10 @@ while True:
       pos = (userx1, usery1)
       obj = (ppasarx, ppasary)
       if pos == obj:
-        print("Berjalan menuju pasar »")
-        wkt()
+        print(" ")
+        print(" Berjalan menuju pasar »")
+        print(" ")
+        ldkb()
         worldpos = "pasar"
         
     #PART_menebang pohon t.1(0)
@@ -721,52 +835,68 @@ while True:
       pos = (userx1, usery1)
       obj = pohon1
       if pos in obj:
-        if Hp >= 3.5:
-          print("Mulai menebang...")
+        if Hp >= 3:
+          print(" ")
+          print(" Mulai menebang...")
           wkt()
-          Hp -= 3.5
+          Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
           pohon1.remove((userx1, usery1))
           respawn1[userx1, usery1] = now1 + w_tumbuh1
-          print("Pohon sukses ditebang ✓")
+          print(" ")
+          print(" \033[32mPohon sukses ditebang ✓\033[0m")
+          print(" ")
           tas += 3
-          input("Tekan Enter...")
+          input(" ➥ Enter.")
         else:
-          print("♥️ = 🔋")
-          input("Enter...")
+          print(" ")
+          print(" ♥️ = 🔋")
+          print(" ")
+          input(" ➥ Enter.")
       else:
-        print("Tidak ada pohon...")
-        input("Enter...")
+        print(" ")
+        print(" \033[33mTunggu pohon tumbuh!\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
+    
+  
       
     #PART_menebang pohon t.2(0) 
     if cmd == "2":
       pos = (userx1, usery1)
       obj = pohon2
       if pos in obj:
-        if Hp >= 3.5:
-          print("Mulai menebang...")
+        if Hp >= 3:
+          print(" ")
+          print(" Mulai menebang...")
           wkt()
-          Hp -= 3.5
+          Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
           pohon2.remove((userx1, usery1))
           respawn2[userx1, usery1] = now2 + w_tumbuh2
-          print("Pohon sukses ditebang ✓")
+          print(" ")
+          print(" \033[32mPohon sukses ditebang ✓\033[0m")
+          print(" ")
           tas += 3
-          input("Tekan Enter...")
+          input(" ➥ Enter.")
         else:
-          print("♥️ = 🔋")
-          input("Enter...")
+          print(" ")
+          print(" ♥️ = 🔋")
+          print(" ")
+          input(" ➥ Enter.")
       else:
-        print("Tidak ada pohon...")
-        input("Enter...")
+        print(" ")
+        print(" \033[33mTunggu pohon tumbuh!\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
         
   #PASAR
   else:
     d_pasar()
     print(" ")
-    cmd=input("perintah :").lower()
+    cmd=input(" ➥ perintah : ").lower()
     
     if cmd == "w":
       useryp -= 1
@@ -789,16 +919,26 @@ while True:
       useryp = 0
     elif useryp >= pasary:
       useryp = pasary -1
-      
-    if (userxp, useryp) == (bpasarx, bpasary):
-      print("« pergi kekebun")
-      wkt()
-      worldpos = "kebun"
-      
-    if (userxp, useryp) in Tokbit:
-      print("Masuk ketoko Bibit »")
-      wkt()
-      print("Didalam toko ✓")
-      input("Tekan Enter...")
-      toko_bibit()
+     
+    if cmd == "m":
+      pos = (userxp, useryp)
+      obj = (bpasarx, bpasary)
+      if pos == obj:
+        print(" ")
+        print(" « pergi kekebun")
+        ldkb()
+        worldpos = "kebun"
+    
+    if cmd == "m":
+      pos = (userxp, useryp)
+      obj = Tokbit
+      if pos in obj:
+        print(" ")
+        print(" Masuk ketoko Bibit »")
+        print(" ")
+        wkt()
+        print(" \033[32mDidalam toko ✓\033[0m")
+        print(" ")
+        input(" ➥ Enter.")
+        toko_bibit()
   
