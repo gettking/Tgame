@@ -1,5 +1,6 @@
 import os
 import time
+from feedback import feedback
 
 print()
 print("Sakedap ya nyonyot aku ♥️")
@@ -20,4 +21,21 @@ else:
 
 time.sleep(2)
 
-os.system("python Tgame.py")
+# MENU setelah update
+while True:
+    print("\n=== TGAME MENU ===")
+    print("1. Mulai Game")
+    print("2. Kirim Laporan / Saran")
+    print("3. Keluar")
+
+    pilih = input("\nPilih: ")
+
+    if pilih == "1":
+        os.system("python Tgame.py")
+        break
+
+    elif pilih == "2":
+        feedback()
+
+    elif pilih == "3":
+        break

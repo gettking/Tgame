@@ -224,10 +224,10 @@ def d_rumah():
   print("┌─────────┐")
   print("│🏠\033[32m Rumah\033[0m │")
   print("└─────────┘")
-  print("┌────────────────────────────┐")
-  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<5}│")
-  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5}│")
-  print("└────────────────────────────┘")
+  print("┌─────────────────────────────┐")
+  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
+  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
+  print("└─────────────────────────────┘")
   
   print("│---------------------------------│")
   
@@ -299,10 +299,10 @@ def d_kebun():
   print("└─────────┘")
   
   
-  print("┌────────────────────────────┐")
-  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<5}│")
-  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5}│")
-  print("└────────────────────────────┘")
+  print("┌─────────────────────────────┐")
+  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
+  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
+  print("└─────────────────────────────┘")
   
   print("|-----------------------------------|")
   
@@ -613,6 +613,8 @@ while True:
   if worldpos == "start":
     #Random_Kode
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
+    
+    print("\033[32mNote\033[0m : \033[36mGame ini sepenuhnya belum siap\nuntuk dimainkan. namun ada beberapa\nfitur yang sudah bisa kamu coba. \nsepenuhnya progres game sejauh\nini hanya 20% berjalan.\033[0m")#111111111
     
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
