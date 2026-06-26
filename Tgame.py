@@ -614,7 +614,7 @@ while True:
     #Random_Kode
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
-    print("1 2 3 4 5 6 ")
+    print("ayang bau codot")
     print("\033[32mNote\033[0m : \033[36mGame ini sepenuhnya belum siap\nuntuk dimainkan. namun ada beberapa\nfitur yang sudah bisa kamu coba. \nsepenuhnya progres game sejauh\nini hanya 20% berjalan.\033[0m")#111111111
     
     print("╔══════════╗")
