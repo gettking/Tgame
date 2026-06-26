@@ -83,6 +83,30 @@ wallsk = {
 
 worldpos = "start"
 
+def ldtb(delay=0.17):
+  
+  fase = [
+    "                        🌑\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌑",
+    "                        🌒\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌒",
+    "                        🌓\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌓",
+    "                        🌔\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌔",
+    "                        🌕\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌕",
+    "              \033[32mPohon sukses ditebang ✓\033[0m"
+    ]
+  for bulan in fase:
+    print(f"\r{bulan}", end="", flush=True)
+    time.sleep(delay)
+  print()
+  
+  
+  
+  
+
 def ldkb():
   
   for i in [
@@ -99,19 +123,19 @@ def ldkb():
 def ldcasfull():
   
   for i in [
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "\033[33mDaya sudah full !\033[0m"
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " \033[33mDaya sudah full !\033[0m"
     ]:
       print(f"\r{i}", end="", flush=True)
       time.sleep(0.3)
@@ -119,34 +143,42 @@ def ldcasfull():
 def ldcas():
   
   for i in [
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "» Mengisi Daya «",
-    "\033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    "\033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    "\033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    "\033[32mDaya terisi penuh ✓\033[0m"
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " » Mengisi Daya «",
+    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
+    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
+    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
+    " \033[32mDaya terisi penuh ✓\033[0m"
     ]:
       print(f"\r{i}", end="", flush=True)
       time.sleep(0.3)
 
-def ldMbrkgl():
+def ldMbrkgl(delay=0.17):
   
-  for i in ["◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆",  "\033[31mSaldo G-coin kosong !\033[0m"]:
-    print(f"\r{i}", end="", flush=True)
-    time.sleep(0.2)
-
-def ldMbrk():
-  
-  for i in ["◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆", "◇", "◈", "◆",  " "]:
-    print(f"\r{i}", end="", flush=True)
-    time.sleep(0.2)
+  fase = [
+    "                        🌑\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌑",
+    "                        🌒\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌒",
+    "                        🌓\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌓",
+    "                        🌔\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌔",
+    "                        🌕\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌕",
+    "             \033[31mSaldo G-coin kosong !\033[0m"
+    ]
+  for bulan in fase:
+    print(f"\r{bulan}", end="", flush=True)
+    time.sleep(delay)
+  print()
 
 def ldSwp():
   
@@ -166,9 +198,20 @@ def ldGal():
     print(f"\r\033[31m{i}\033[0m", end="", flush=True)
     time.sleep(0.6)
 
-def wkt(delay=0.5):
+def wkt(delay=0.15):
   
-  fase = ["🌑", "🌒", "🌓", "🌔", "🌕"]
+  fase = [
+    "                        🌑\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌑",
+    "                        🌒\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌒",
+    "                        🌓\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌓",
+    "                        🌔\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌔",
+    "                        🌕\033[32m⦁\033[0m",
+    "                       \033[32m⦁\033[0m🌕"
+    ]
   for bulan in fase:
     print(f"\r{bulan}", end="", flush=True)
     time.sleep(delay)
@@ -266,7 +309,7 @@ def d_kebun():
   pos = (userx1, usery1)
   ob = (pintux1, pintuy1)
   if pos == ob:
-    print(" [Rumah] m untuk masuk «")
+    print(" [\033[32mRumah\033[0m] m untuk masuk «")
   
   pos = (userx1, usery1)
   ob = k_lahan
@@ -276,17 +319,17 @@ def d_kebun():
   pos = (userx1, usery1)
   ob = pohon1
   if pos in ob:
-    print(" Area Pohon t.1(0) 1 untuk menebang.")
+    print(" Area Pohon \033[32mt.1\033[0m(0) 1 untuk menebang.")
   
   pos = (userx1, usery1)
   ob = pohon2
   if pos in ob:
-    print(" Area Pohon t.2(0) 2 untuk menebang.")
+    print(" Area Pohon \033[32mt.2\033[0m(0) 2 untuk menebang.")
   
   pos = (userx1, usery1)
   ob = (ppasarx, ppasary)
   if pos == ob:
-    print(" » [Pasar] m untuk pergi kepasar.")
+    print(" » [\033[32mPasar\033[0m] m untuk pergi kepasar.")
   
   
   print("|-----------------------------------|")
@@ -381,7 +424,7 @@ def coins():
           continue
       
       print(" ")
-      ldMbrk()
+      wkt()
       while True:
         
         os.system("clear")
@@ -393,7 +436,7 @@ def coins():
         #BACK
         if jswap == "x":
           print(" ")
-          ldMbrk()
+          wkt()
           break 
         
         if jswap == "max":
@@ -445,7 +488,7 @@ def coins():
       print(" ")
       print("membatalkan swap(\033[31mExit\033[0m) !")
       print(" ")
-      ldMbrk()
+      wkt()
       break
     
     else:
@@ -665,7 +708,7 @@ while True:
         print(" ")
         print("membuka brankas!")
         print(" ")
-        ldMbrk()
+        wkt()
         coins()
 
     if cmd == "m":
@@ -804,7 +847,7 @@ while True:
           input(" ➥ Enter.")
       else:
         print(" ")
-        print(" Tidak ada objek tanaman!")
+        print(" \033[31mTidak ada objek tanaman!\033[0m")
         print(" ")
         input(" ➥ Enter.")
     
@@ -838,14 +881,13 @@ while True:
         if Hp >= 3:
           print(" ")
           print(" Mulai menebang...")
-          wkt()
           Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
           pohon1.remove((userx1, usery1))
           respawn1[userx1, usery1] = now1 + w_tumbuh1
           print(" ")
-          print(" \033[32mPohon sukses ditebang ✓\033[0m")
+          ldtb()
           print(" ")
           tas += 3
           input(" ➥ Enter.")
@@ -870,14 +912,13 @@ while True:
         if Hp >= 3:
           print(" ")
           print(" Mulai menebang...")
-          wkt()
           Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
           pohon2.remove((userx1, usery1))
           respawn2[userx1, usery1] = now2 + w_tumbuh2
           print(" ")
-          print(" \033[32mPohon sukses ditebang ✓\033[0m")
+          ldtb()
           print(" ")
           tas += 3
           input(" ➥ Enter.")
