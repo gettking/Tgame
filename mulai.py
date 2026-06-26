@@ -23,7 +23,7 @@ time.sleep(2)
 
 # MENU setelah update
 while True:
-    print("\n=== TGAME MENU ===")
+    print("\n=== GAME MENU ===")
     print("1. Mulai Game")
     print("2. Kirim Laporan / Saran")
     print("3. Keluar")
