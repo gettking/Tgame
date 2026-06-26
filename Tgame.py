@@ -667,6 +667,7 @@ while True:
       userx -= 1
     elif cmd == "d":
       userx += 1
+
       
     if userx < 0:
       userx = 0
