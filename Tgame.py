@@ -109,16 +109,25 @@ def ldtb(delay=0.17):
 
 def ldkb():
   
-  for i in [
-    " \033[32m▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
-    " \033[32m▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
-    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
-    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
-    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱\033[0m",
-    " \033[32m▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰\033[0m"
-    ]:
-      print(f"\r{i}", end="", flush=True)
-      time.sleep(0.5)
+  def ldkb():
+    bar = [
+        "▰▱▱▱▱▱▱▱▱▱",
+        "▰▰▱▱▱▱▱▱▱▱",
+        "▰▰▰▱▱▱▱▱▱▱",
+        "▰▰▰▰▱▱▱▱▱▱",
+        "▰▰▰▰▰▱▱▱▱▱",
+        "▰▰▰▰▰▰▱▱▱▱",
+        "▰▰▰▰▰▰▰▱▱▱",
+        "▰▰▰▰▰▰▰▰▱▱",
+        "▰▰▰▰▰▰▰▰▰▱",
+        "▰▰▰▰▰▰▰▰▰▰",
+    ]
+
+    for i in bar:
+        os.system("clear")
+        print("\033[32mLoading...\033[0m")
+        print(i)
+        time.sleep(0.3)
 
 def ldcasfull():
   
@@ -408,9 +417,10 @@ def coins():
     print(f" » G-Coin   = \033[32m{gcoins}\033[0m")
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(" n =\033[31m Exit\033[0m ⇐")
+    print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(" ")
     
-    cmd=input("Swap G-coin ke Gxc [y or n]: ")
+    cmd=input(" ➥ Swap G-coin ke Gxc [y or n]: ")
     
     if cmd == "y":
   
@@ -614,7 +624,7 @@ while True:
     #Random_Kode
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
-    print("ayang bau codot")
+    
     print("\033[32mNote\033[0m : \033[36mGame ini sepenuhnya belum siap\nuntuk dimainkan. namun ada beberapa\nfitur yang sudah bisa kamu coba. \nsepenuhnya progres game sejauh\nini hanya 20% berjalan.\033[0m")#111111111
     
     print("╔══════════╗")
