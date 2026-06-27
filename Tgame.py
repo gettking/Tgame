@@ -85,7 +85,7 @@ wallsk = {
 wallp = {
   (2, 1), (3, 1),
   (1, 2), (1, 3),
-  (3, 5), (4, 3),
+  (3, 4), (4, 3),
   (4, 2)
 }
 
@@ -382,7 +382,7 @@ def d_kebun():
 def d_pasar():
   
   print("┌─────────┐")
-  print("│🛍\033[32m Pasar\033[0m │")
+  print("│🛍\033[32m Pasar\033[0m  │")
   print("└─────────┘")
 
   print("┌─────────────────────────────┐")
@@ -436,6 +436,7 @@ def coins():
     
     os.system("clear")
     
+    
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(f" » 1 G-coin =\033[32m {rate_Gxc}\033[0m Gxc")
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
@@ -449,7 +450,6 @@ def coins():
     
     if cmd == "y":
   
-      
       if gcoins <= 0:
           print(" ")
           ldMbrkgl()
@@ -461,6 +461,8 @@ def coins():
       print(" ")
       wkt()
       while True:
+        
+        fee = 0.5
         
         os.system("clear")
         print("┌──────────────────┐")
@@ -475,36 +477,38 @@ def coins():
           break 
         
         if jswap == "max":
-          sgxc = gcoins
+          sgxc = gcoins - fee
+          
           
         else:
           try:
             sgxc = float(jswap)
-          
+            
+            if sgxc >= gcoins:
+              print(" Saldo lebih atau kurang.")
+              input("enter")
+              sgxc = gcoins - fee
+            else:
+              break
+              
           except:
             print(" ")
             print("\033[31mInput salah !\033[0m")
             print(" ")
             input(" ➥ Enter.")
             continue
-          
-        if sgxc <= 0:
+        #11111111111
+        total = sgxc + fee
+        if total > gcoins:
           print(" ")
-          print("\033[31mAngka tidak boleh 0 atau minus!\033[0m")
-          print(" ")
-          input(" ➥ Enter.")
-          continue
-        
-        elif sgxc > gcoins:
-          print(" ")
-          print("\033[31mjumlah G-coin kurang !\033[0m")
+          print("\033[31mSaldo G-coin tidak cukup!\033[0m")
           print(" ")
           input(" ➥ Enter.")
           continue
         
-        
-        gcoins -= sgxc
+        gcoins -= total
         gxc += sgxc * rate_Gxc
+        Shasil = sgxc * rate_Gxc
         
         gcoins = round(gcoins, 3)
         gxc = round(gxc, 3)
@@ -513,7 +517,7 @@ def coins():
         ldSwp()
         print(" ")
         print(" ")
-        print(f" Token Gxc = \033[33m{gxc}\033[0m")
+        print(f" Hasil swap = \033[32m{Shasil}\033[0m") 
         print(" ")
         input(" ➥ Enter.")
         continue
@@ -923,7 +927,7 @@ while True:
           print(" ")
           print(" Mulai menebang...")
           Hp -= 3
-          gcoins += 7
+          gcoins += 2
           gcoins = round(gcoins, 3)
           pohon1.remove((userx1, usery1))
           respawn1[userx1, usery1] = now1 + w_tumbuh1
@@ -954,7 +958,7 @@ while True:
           print(" ")
           print(" Mulai menebang...")
           Hp -= 3
-          gcoins += 7
+          gcoins += 2
           gcoins = round(gcoins, 3)
           pohon2.remove((userx1, usery1))
           respawn2[userx1, usery1] = now2 + w_tumbuh2
