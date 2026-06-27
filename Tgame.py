@@ -81,6 +81,14 @@ wallsk = {
   (0, 1), (1, 1)
 }
 
+#walls_pasar
+wallp = {
+  (2, 1), (3, 1),
+  (1, 2), (1, 3),
+  (3, 5), (4, 3),
+  (4, 2)
+}
+
 worldpos = "start"
 
 def ldtb(delay=0.17):
@@ -298,7 +306,6 @@ def d_kebun():
   print("│🏡\033[32m Kebun\033[0m │")
   print("└─────────┘")
   
-  
   print("┌─────────────────────────────┐")
   print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
   print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
@@ -374,20 +381,47 @@ def d_kebun():
   
 def d_pasar():
   
-  print(">🛍< Pasar")
-  print(f"♥️  =", Hp,"%  🎒 =", tas, " 🪙 =", gxc)
-  print(f"♣  =", bibit)
-  print(" ")
+  print("┌─────────┐")
+  print("│🛍\033[32m Pasar\033[0m │")
+  print("└─────────┘")
+
+  print("┌─────────────────────────────┐")
+  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
+  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
+  print("└─────────────────────────────┘")
+  
+  print("|-----------------------------------|")
+  
+  pos = (userxp, useryp)
+  ob = (bpasarx, bpasary)
+  if pos == ob:
+    print(" [\033[32mKebun\033[0m] m untuk pergi kekebun «")
+    
+  pos = (userxp, useryp)
+  ob = Tokbit
+  if pos in ob:
+    print(" [\033[32mToko Bibit\033[0m] m untuk masuk »")
+    
+  
+  
+  print("|-----------------------------------|")
   
   for y in range(pasary):
     ln = ""
     for x in range(pasarx):
+      
       if (x, y) == (userxp, useryp):
-        ln += "😍"
+        if pusing > 0:
+          ln += "😵"
+        else:
+          ln += "😍"
+          
       elif (x, y) == (bpasarx, bpasary):
-        ln += "🔙"
+        ln += "🟦"
       elif (x, y) in Tokbit:
         ln += "🍀"
+      elif (x, y) in wallp:
+        ln += "🧱"
       else:
         ln += "🔲"
     print(ln)
@@ -568,8 +602,9 @@ def toko_bibit():
           tas += 10
           gxc -= t1_5
           gxc = round(gxc, 3)
-          print("Sukses ✓")
-          input("Tekan Enter...")
+          print(" Sukses ✓")
+          print(" ")
+          input(" ➥Enter.")
         else:
           print("proses membeli item bibit »")
           wkt()
@@ -578,7 +613,8 @@ def toko_bibit():
           
       else:
         print("input kode salah!")
-        input("Tekan Enter...")
+        print(" ")
+        input(" ➥ Enter.")
           
   
 while True:
@@ -615,8 +651,9 @@ while True:
     #Random_Kode
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
-    
-    print("\033[32mNote\033[0m : \033[36mGame ini sepenuhnya belum siap\nuntuk dimainkan. namun ada beberapa\nfitur yang sudah bisa kamu coba. \nsepenuhnya progres game sejauh\nini hanya 20% berjalan.\033[0m")#111111111
+    print(" ")
+    print("\033[32mNote\033[0m : \033[36mProgres Game 20%\033[0m")
+    print(" ")
     
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
@@ -691,7 +728,6 @@ while True:
       
     if (userx, usery) == (casx, casy):
       casE = 2
-      
     if casE > 0:
       casE -= 1
     
@@ -940,9 +976,12 @@ while True:
         
   #PASAR
   else:
+    
     d_pasar()
     print(" ")
     cmd=input(" ➥ perintah : ").lower()
+    
+    oldx, oldy = userxp, useryp
     
     if cmd == "w":
       useryp -= 1
@@ -966,12 +1005,23 @@ while True:
     elif useryp >= pasary:
       useryp = pasary -1
      
+    pos = (userxp, useryp)
+    obj = wallp
+    if pos in obj:
+      userxp, useryp = oldx, oldy
+      pusing = 3
+      
+    if pusing > 0:
+      pusing -= 1
+     
+     
     if cmd == "m":
       pos = (userxp, useryp)
       obj = (bpasarx, bpasary)
       if pos == obj:
         print(" ")
         print(" « pergi kekebun")
+        print(" ")
         ldkb()
         worldpos = "kebun"
     
