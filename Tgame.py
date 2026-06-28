@@ -820,6 +820,7 @@ while True:
     if (userx, usery) in walls:
       userx, usery = oldx, oldy
       pusing = 3
+      tas -= 3
       info = " \033[33maduhhh 😵\033[0m"
     else:
         info = ""
@@ -907,6 +908,7 @@ while True:
     if (userx1, usery1) in wallsk:
       userx1, usery1 = oldx, oldy
       pusing = 3
+      tas -= 3
       info = " \033[33maduhhh 😵\033[0m"
     else:
         info = ""
@@ -1125,6 +1127,7 @@ while True:
       userxp, useryp = oldx, oldy
       pusing = 3
       info = " \033[33maduhhh 😵\033[0m"
+      tas -= 4
     else:
         info = ""
         
