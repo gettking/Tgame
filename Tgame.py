@@ -2,7 +2,7 @@ import random
 import string
 import time
 import os
-
+####0000
 #map_rumah
 rumahx, rumahy = 5, 5
 userx, usery = 2, 2
