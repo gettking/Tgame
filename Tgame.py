@@ -96,17 +96,17 @@ def ldtb(delay=0.17):
   
   for i in [
     
-    "🌑".center(50),
-    "🌑".center(50),
-    "🌒".center(50),
-    "🌒".center(50),
-    "🌓".center(50),
-    "🌓".center(50),
-    "🌔".center(50),
-    "🌔".center(50),
-    "🌕".center(50),
-    "🌕".center(50),
-    "\033[32mPohon sukses ditebang ✓\033[0m".center(50)
+    "🌑",
+    "🌑",
+    "🌒",
+    "🌒",
+    "🌓",
+    "🌓",
+    "🌔",
+    "🌔",
+    "🌕",
+    "🌕",
+    "\033[32mPohon sukses ditebang ✓\033[0m"
     ]:
         print(f"\r{i}", end="", flush=True)
         time.sleep(delay)
@@ -172,17 +172,17 @@ def ldMbrkgl(delay=0.17):
   
   for i in [
     
-    "🌑".center(50),
-    "🌑".center(50),
-    "🌒".center(50),
-    "🌒".center(50),
-    "🌓".center(50),
-    "🌓".center(50),
-    "🌔".center(50),
-    "🌔".center(50),
-    "🌕".center(50),
-    "🌕".center(50),
-    "\033[31mSaldo G-coin kosong !\033[0m".center(50)
+    "🌑",
+    "🌑",
+    "🌒",
+    "🌒",
+    "🌓",
+    "🌓",
+    "🌔",
+    "🌔",
+    "🌕",
+    "🌕",
+    "\033[31mSaldo G-coin kosong !\033[0m"
     ]:
          print(f"\r{i}", end="", flush=True)
          time.sleep(delay)
@@ -208,16 +208,16 @@ def ldGal():
 def wkt(delay=0.15):
   
   for i in [
-    "🌑".center(50),
-    "🌑".center(50),
-    "🌒".center(50),
-    "🌒".center(50),
-    "🌓".center(50),
-    "🌓".center(50),
-    "🌔".center(50),
-    "🌔".center(50),
-    "🌕".center(50),
-    "🌕".center(50)
+    "🌑",
+    "🌑",
+    "🌒",
+    "🌒",
+    "🌓",
+    "🌓",
+    "🌔",
+    "🌔",
+    "🌕",
+    "🌕"
     ]:
         print(f"\r{i}", end="", flush=True)
         time.sleep(delay)
@@ -315,6 +315,8 @@ def d_kebun():
   
   print("|-----------------------------------|")
   
+  print(info)
+  
   pos = (userx1, usery1)
   ob = wallsk
   if pos in ob:
@@ -399,6 +401,8 @@ def d_pasar():
   print("└─────────────────────────────┘")
   
   print("|-----------------------------------|")
+  
+  print(info)
   
   pos = (userxp, useryp)
   ob = wallp
@@ -510,7 +514,7 @@ def coins():
               print(" ")
               input("enter")
               continue
-            elif sgxc + fee > gcoins:
+            elif sgxc + fee >= gcoins:
               print(" ")
               print(" Saldo tidak cukup !")
               print(" ")
@@ -587,19 +591,22 @@ def toko_bibit():
       
       if ubeli == "1":
         if gxc >= t1_1:
-          print("proses membeli item bibit »")
-          wkt()
-          bibit += 1
-          tas += 2
-          gxc -= t1_1
-          gxc = round(gxc, 3)
-          print("Sukses ✓")
-          input("Tekan Enter...")
+            if tas >= 7:
+                print("proses membeli item bibit »")
+                wkt()
+                bibit += 1
+                tas += 2
+                gxc -= t1_1
+                gxc = round(gxc, 3)
+                print("Sukses ✓")
+                input("Tekan Enter...")
+            else:
+                print(" \033[33mTas kamu penuh !\033[0m")
         else:
-          print("proses membeli item bibit »")
-          wkt()
-          print("Token Gxc tidak cukup!")
-          continue
+            print("proses membeli item bibit »")
+            wkt()
+            print("Token Gxc tidak cukup!")
+            continue
         
       elif ubeli == "3":
         if gxc >= t1_3:
@@ -953,6 +960,7 @@ while True:
         if Hp >= 3:
           print(" ")
           print(" Mulai menebang...")
+          print(" ")
           Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
@@ -984,6 +992,7 @@ while True:
         if Hp >= 3:
           print(" ")
           print(" Mulai menebang...")
+          print(" ")
           Hp -= 3
           gcoins += 7
           gcoins = round(gcoins, 3)
