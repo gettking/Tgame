@@ -583,7 +583,7 @@ def coins():
 
 def toko_bibit():
   
-  global gxc, bibit, tas
+  global gxc, bibit, tas, exp
   
   #harga_bibit_t.1
   t1_1 = 15
@@ -750,7 +750,7 @@ while True:
     print(" ")
     print("\033[32mNote\033[0m : \033[36mProgres Game » [25%]\033[0m")
     print(" ")
-    print(" \033[32m» Raih 28 [exp], kondisi [Hp] 28%, dan\nkumpulkan 28 [bibit] untuk menyelesaikan game ✓\033[0m")
+    print(" \033[32m» Raih 10 [exp], kondisi [Hp] 10%, dan\nkumpulkan 10 [bibit] untuk menyelesaikan game ✓\033[0m")
     print(" ")
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
@@ -1155,7 +1155,7 @@ while True:
         input(" ➥ Enter.")
         toko_bibit()
 
-  if exp == 28 and Hp == 28 and bibit == 28:
+  if exp >= 10 and Hp >= 10 and bibit >= 10:
     print(" \033[32mGame Selesai ✓\033[0m")
     break
     
