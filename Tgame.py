@@ -750,7 +750,7 @@ while True:
     print(" ")
     print("\033[32mNote\033[0m : \033[36mProgres Game » [25%]\033[0m")
     print(" ")
-    print(" \033[32m» Raih 28 [exp], kondisi [Hp] 28%, dan kumpulkan 28 [bibit] untuk menyelesaikan game ✓\033[0m")
+    print(" \033[32m» Raih 28 [exp], kondisi [Hp] 28%, dan\nkumpulkan 28 [bibit] untuk menyelesaikan game ✓\033[0m")
     print(" ")
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
