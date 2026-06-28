@@ -13,9 +13,10 @@ casx, casy = 4, 4
 respawnC = {}
 w_isi = 10
 pintux, pintuy = 4, 2
-pusing = 0
 casE = 0
-
+#Global
+pusing = 0
+info = ""
 
 
 #map_kebun
@@ -93,23 +94,22 @@ worldpos = "start"
 
 def ldtb(delay=0.17):
   
-  fase = [
-    "                        🌑\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌑",
-    "                        🌒\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌒",
-    "                        🌓\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌓",
-    "                        🌔\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌔",
-    "                        🌕\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌕",
-    "              \033[32mPohon sukses ditebang ✓\033[0m"
-    ]
-  for bulan in fase:
-    print(f"\r{bulan}", end="", flush=True)
-    time.sleep(delay)
-  print()
+  for i in [
+    
+    "🌑".center(50),
+    "🌑".center(50),
+    "🌒".center(50),
+    "🌒".center(50),
+    "🌓".center(50),
+    "🌓".center(50),
+    "🌔".center(50),
+    "🌔".center(50),
+    "🌕".center(50),
+    "🌕".center(50),
+    "\033[32mPohon sukses ditebang ✓\033[0m".center(50)
+    ]:
+        print(f"\r{i}", end="", flush=True)
+        time.sleep(delay)
   
 def ldkb():
   
@@ -170,23 +170,22 @@ def ldcas():
 
 def ldMbrkgl(delay=0.17):
   
-  fase = [
-    "                        🌑\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌑",
-    "                        🌒\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌒",
-    "                        🌓\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌓",
-    "                        🌔\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌔",
-    "                        🌕\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌕",
-    "             \033[31mSaldo G-coin kosong !\033[0m"
-    ]
-  for bulan in fase:
-    print(f"\r{bulan}", end="", flush=True)
-    time.sleep(delay)
-  print()
+  for i in [
+    
+    "🌑".center(50),
+    "🌑".center(50),
+    "🌒".center(50),
+    "🌒".center(50),
+    "🌓".center(50),
+    "🌓".center(50),
+    "🌔".center(50),
+    "🌔".center(50),
+    "🌕".center(50),
+    "🌕".center(50),
+    "\033[31mSaldo G-coin kosong !\033[0m".center(50)
+    ]:
+         print(f"\r{i}", end="", flush=True)
+         time.sleep(delay)
 
 def ldSwp():
   
@@ -208,26 +207,26 @@ def ldGal():
 
 def wkt(delay=0.15):
   
-  fase = [
-    "                        🌑\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌑",
-    "                        🌒\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌒",
-    "                        🌓\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌓",
-    "                        🌔\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌔",
-    "                        🌕\033[32m⦁\033[0m",
-    "                       \033[32m⦁\033[0m🌕"
-    ]
-  for bulan in fase:
-    print(f"\r{bulan}", end="", flush=True)
-    time.sleep(delay)
-  print()
+  for i in [
+    "🌑".center(50),
+    "🌑".center(50),
+    "🌒".center(50),
+    "🌒".center(50),
+    "🌓".center(50),
+    "🌓".center(50),
+    "🌔".center(50),
+    "🌔".center(50),
+    "🌕".center(50),
+    "🌕".center(50)
+    ]:
+        print(f"\r{i}", end="", flush=True)
+        time.sleep(delay)
 wkt()
 
 #FUNGSI RUMAH
 def d_rumah():
+    
+  global userx, usery
 
   print("┌─────────┐")
   print("│🏠\033[32m Rumah\033[0m │")
@@ -238,6 +237,9 @@ def d_rumah():
   print("└─────────────────────────────┘")
   
   print("│---------------------------------│")
+  
+  #infopusing:p
+  print(info)
   
   pos = (userx, usery)
   ob = (coinx, coiny)
@@ -314,6 +316,11 @@ def d_kebun():
   print("|-----------------------------------|")
   
   pos = (userx1, usery1)
+  ob = wallsk
+  if pos in ob:
+      print(" \033[33mKamu menabrak tembok !\033[0m")
+  
+  pos = (userx1, usery1)
   ob = (pintux1, pintuy1)
   if pos == ob:
     print(" [\033[32mRumah\033[0m] m untuk masuk «")
@@ -377,6 +384,7 @@ def d_kebun():
         ln += "➡️"
       else:
         ln += "🟦"
+        
     print(ln)
   
 def d_pasar():
@@ -392,6 +400,11 @@ def d_pasar():
   
   print("|-----------------------------------|")
   
+  pos = (userxp, useryp)
+  ob = wallp
+  if pos in ob:
+      print(" \033[33mKamu menabrak tembok !\033[0m")
+      
   pos = (userxp, useryp)
   ob = (bpasarx, bpasary)
   if pos == ob:
@@ -424,6 +437,7 @@ def d_pasar():
         ln += "🧱"
       else:
         ln += "🔲"
+        
     print(ln)
 
 
@@ -477,35 +491,40 @@ def coins():
           break 
         
         if jswap == "max":
-          sgxc = gcoins - fee
           
+          if gcoins <= fee:
+            print(" ")
+            print(" \033[31mSaldo tidak cukup membayar Fee !\033[0m")
+            print(" ")
+            input("enter")
+            continue
+          
+          sgxc = gcoins - fee
           
         else:
           try:
             sgxc = float(jswap)
-            
-            if sgxc >= gcoins:
-              print(" Saldo lebih atau kurang.")
+            if sgxc <= 0:
+              print(" ")
+              print(" Tidak boleh 0 !.")
+              print(" ")
               input("enter")
-              sgxc = gcoins - fee
-            else:
-              break
-              
+              continue
+            elif sgxc + fee > gcoins:
+              print(" ")
+              print(" Saldo tidak cukup !")
+              print(" ")
+              input("enter")
+              continue
+            
           except:
             print(" ")
             print("\033[31mInput salah !\033[0m")
             print(" ")
             input(" ➥ Enter.")
             continue
-        #11111111111
+          
         total = sgxc + fee
-        if total > gcoins:
-          print(" ")
-          print("\033[31mSaldo G-coin tidak cukup!\033[0m")
-          print(" ")
-          input(" ➥ Enter.")
-          continue
-        
         gcoins -= total
         gxc += sgxc * rate_Gxc
         Shasil = sgxc * rate_Gxc
@@ -727,6 +746,10 @@ while True:
     if (userx, usery) in walls:
       userx, usery = oldx, oldy
       pusing = 3
+      info = " \033[33maduhhh 😵\033[0m"
+    else:
+        info = ""
+     
     if pusing > 0:
       pusing -= 1
       
@@ -810,6 +833,10 @@ while True:
     if (userx1, usery1) in wallsk:
       userx1, usery1 = oldx, oldy
       pusing = 3
+      info = " \033[33maduhhh 😵\033[0m"
+    else:
+        info = ""
+      
       
     if pusing > 0:
       pusing -= 1
@@ -927,7 +954,7 @@ while True:
           print(" ")
           print(" Mulai menebang...")
           Hp -= 3
-          gcoins += 2
+          gcoins += 7
           gcoins = round(gcoins, 3)
           pohon1.remove((userx1, usery1))
           respawn1[userx1, usery1] = now1 + w_tumbuh1
@@ -958,7 +985,7 @@ while True:
           print(" ")
           print(" Mulai menebang...")
           Hp -= 3
-          gcoins += 2
+          gcoins += 7
           gcoins = round(gcoins, 3)
           pohon2.remove((userx1, usery1))
           respawn2[userx1, usery1] = now2 + w_tumbuh2
@@ -1014,7 +1041,10 @@ while True:
     if pos in obj:
       userxp, useryp = oldx, oldy
       pusing = 3
-      
+      info = " \033[33maduhhh 😵\033[0m"
+    else:
+        info = ""
+        
     if pusing > 0:
       pusing -= 1
      
