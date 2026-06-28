@@ -11,7 +11,7 @@ invx, invy = 4, 0
 crafx, crafy = 0, 4
 casx, casy = 4, 4
 respawnC = {}
-w_isi = 10
+w_isi = 45
 pintux, pintuy = 4, 2
 casE = 0
 #Global
@@ -51,7 +51,6 @@ wt_tanam = 20
 
 ppasarx, ppasary = 10, 3
 
-
 #map_pasar
 pasarx, pasary = 21, 10
 userxp, useryp = 1, 0
@@ -61,7 +60,6 @@ Tokbit = {
 }
 
 bpasarx, bpasary = 0, 0
-
 
 #data_user
 Hp = 100
@@ -252,7 +250,7 @@ def d_rumah():
   pos = (userx, usery)
   ob = (crafx, crafy)
   if pos == ob:
-    print("│ [\033[33mKerajinan\033[0m]                     │")
+    print("│ [\033[32mKerajinan\033[0m] m untuk masuk »     │")
     
   pos = (userx, usery)
   ob = (pintux, pintuy)
@@ -262,7 +260,7 @@ def d_rumah():
   pos = (userx, usery)
   ob = (invx, invy)
   if pos == ob:
-    print("│ [\033[33mPenyimpanan\033[0m]                   │")
+    print("│ [\033[32mPenyimpanan\033[0m] m untuk masuk »   │")
     
   pos = (userx, usery)
   ob = (casx, casy)
@@ -515,7 +513,7 @@ def coins():
             input(" ➥ Enter.")
             continue
           
-          sgxc = gcoins - fee
+          sgxc = gcoins 
           
         else:
           try:
@@ -547,7 +545,8 @@ def coins():
             print(" ")
             input(" ➥ Enter")
             continue
-
+        
+        
         gcoins -= sgxc
         gxc += hasil_swap * rate_Gxc
         Shasil = hasil_swap * rate_Gxc
@@ -595,20 +594,23 @@ def toko_bibit():
     
     os.system("clear")
     
-    print(f"Saldo Gxc =", gxc)
-    print("tersedia:\n(1) Bibit pohon t.1\n(2) Coming Soon\n(x) keluar")
+    print(" ")
+    print(f" Saldo Gxc = \033[32m{gxc}\033[0m")
+    print(" ")
+    print(" Tersedia:\n(1) Bibit pohon t.1\n(2) Coming Soon\n(x) Keluar")
     print(" ")
   
-    cmd=input("beli : ").lower()
+    cmd=input(" Beli : ").lower()
     
     #testing
     if cmd == "x":
       break
   
     if cmd == "1" or cmd == "satu":
-      print(f"Harga untuk 1 bibit =", t1_1)
-      print("beli 1 (1)\nbeli 3 (3)\nbeli 5 (5)")
-      ubeli=input("input kode sesuai pilihan :").lower()
+      print(" ")
+      print(f"\033[32mHarga untuk 1 bibit = {t1_1}\033[0m")
+      print(" Beli 1 (1)\n Beli 3 (3)\n Beli 5 (5)")
+      ubeli=input(" Input kode sesuai pilihan : ").lower()
       
       if ubeli == "1":
         if gxc >= t1_1:
@@ -623,6 +625,7 @@ def toko_bibit():
                 tas += 2
                 gxc -= t1_1
                 gxc = round(gxc, 3)
+                print(" ")
                 print(" \033[32mSukses ✓\033[0m")
                 print(" ")
                 input("Tekan Enter...")
@@ -655,6 +658,7 @@ def toko_bibit():
                 tas += 6
                 gxc -= t1_3
                 gxc = round(gxc, 3)
+                print(" ")
                 print(" \033[32Sukses ✓\033[0m")
                 print(" ")
                 input(" ➥ Enter.")
@@ -687,6 +691,7 @@ def toko_bibit():
                 tas += 10
                 gxc -= t1_5
                 gxc = round(gxc, 3)
+                print(" ")
                 print(" \033[32mSukses ✓\033[0m")
                 print(" ")
                 input(" ➥ Enter.")
@@ -711,6 +716,18 @@ def toko_bibit():
           print(" \033[31mInput kode salah !\033[0m")
           print(" ")
           input(" ➥ Enter.")
+
+def penyimpanan():
+  
+  print(" ")
+  print(" Halo ")
+  print(" ")
+    
+def kerajinan():
+  
+  print(" ")
+  print(" Kerajinan ")
+  print(" ")
           
   
 while True:
@@ -748,7 +765,7 @@ while True:
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
     print(" ")
-    print("\033[32mNote\033[0m : \033[36mProgres Game » [25%]\033[0m")
+    print("\033[32mNote\033[0m : \033[36mProgres Game » [25.2%]\033[0m")
     print(" ")
     print(" \033[32m» Raih 10 [exp], kondisi [Hp] 10%, dan\nkumpulkan 10 [bibit] untuk menyelesaikan game ✓\033[0m")
     print(" ")
@@ -816,12 +833,13 @@ while True:
       usery = 0
     elif usery >= rumahy:
       usery = rumahy -1
-      
+    
     if (userx, usery) in walls:
       userx, usery = oldx, oldy
-      pusing = 3
-      tas -= 3
       info = " \033[33maduhhh 😵\033[0m"
+      pusing = 3
+      if tas > 0:
+        tas -= 3
     else:
         info = ""
      
@@ -833,6 +851,25 @@ while True:
     if casE > 0:
       casE -= 1
     
+    if cmd == "m":
+      pos = (userx, usery)
+      obj = (invx, invy)
+      if pos == obj:
+          print(" ")
+          print(" Membuka penyimpanan »")
+          print(" ")
+          wkt()
+          penyimpanan()
+    
+    if cmd == "m":
+      pos = (userx, usery)
+      obj = (crafx, crafy)
+      if pos == obj:
+          print(" ")
+          print(" Membuka kerajinan »")
+          print(" ")
+          wkt()
+          kerajinan()
       
     if cmd == "m":
       pos = (userx, usery)
@@ -908,8 +945,9 @@ while True:
     if (userx1, usery1) in wallsk:
       userx1, usery1 = oldx, oldy
       pusing = 3
-      tas -= 3
       info = " \033[33maduhhh 😵\033[0m"
+      if tas > 0:
+        tas -= 3
     else:
         info = ""
       
@@ -952,7 +990,7 @@ while True:
             input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -960,7 +998,7 @@ while True:
         print(" \033[31mHanya bisa dilahan menanam!\033[0m")
         print(" ")
         input(" ➥ Enter.")
-        
+    #1111111111   
     #PART_menebang
     if cmd == "x":
       pos = (userx1, usery1)
@@ -995,7 +1033,7 @@ while True:
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1045,10 +1083,11 @@ while True:
           print(" ")
           tas += 3
           exp += 2
+          print(" ")
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1078,10 +1117,11 @@ while True:
           print(" ")
           tas += 3
           exp += 2
+          print(" ")
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1127,7 +1167,8 @@ while True:
       userxp, useryp = oldx, oldy
       pusing = 3
       info = " \033[33maduhhh 😵\033[0m"
-      tas -= 4
+      if tas > 0:
+        tas -= 3
     else:
         info = ""
         
@@ -1153,12 +1194,14 @@ while True:
         print(" Masuk ketoko Bibit »")
         print(" ")
         wkt()
-        print(" \033[32mDidalam toko ✓\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
         toko_bibit()
 
   if exp >= 10 and Hp >= 10 and bibit >= 10:
+    print(" ")
+    print(" Kamu Hebat !")
+    print(" ")
+    wkt()
+    print(" ")
     print(" \033[32mGame Selesai ✓\033[0m")
     break
     
