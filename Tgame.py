@@ -235,6 +235,9 @@ def d_rumah():
   print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
   print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
   print("└─────────────────────────────┘")
+  #info_kordinat_player
+  pos = (userx, usery)
+  print(f"              \033[32m{pos}\033[0m   ")
   
   print("│---------------------------------│")
   
@@ -312,6 +315,10 @@ def d_kebun():
   print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
   print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
   print("└─────────────────────────────┘")
+  
+  #info_kordinat_player
+  pos = (userx1, usery1)
+  print(f"              \033[32m{pos}\033[0m   ")
   
   print("|-----------------------------------|")
   
@@ -400,6 +407,10 @@ def d_pasar():
   print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
   print("└─────────────────────────────┘")
   
+  #info_kordinat_player
+  pos = (userxp, useryp)
+  print(f"              \033[32m{pos}\033[0m   ")
+  
   print("|-----------------------------------|")
   
   print(info)
@@ -452,8 +463,9 @@ def coins():
   
   while True:
     
-    os.system("clear")
+    global exp
     
+    os.system("clear")
     
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(f" » 1 G-coin =\033[32m {rate_Gxc}\033[0m Gxc")
@@ -500,7 +512,7 @@ def coins():
             print(" ")
             print(" \033[31mSaldo tidak cukup membayar Fee !\033[0m")
             print(" ")
-            input("enter")
+            input(" ➥ Enter.")
             continue
           
           sgxc = gcoins - fee
@@ -510,15 +522,15 @@ def coins():
             sgxc = float(jswap)
             if sgxc <= 0:
               print(" ")
-              print(" Tidak boleh 0 !.")
+              print(" Tidak boleh \033[31m0\033[0m !.")
               print(" ")
-              input("enter")
+              input(" ➥ Enter.")
               continue
-            elif sgxc + fee >= gcoins:
+            elif sgxc > gcoins:
               print(" ")
-              print(" Saldo tidak cukup !")
+              print(" \033[31mSaldo tidak cukup !\033[0m")
               print(" ")
-              input("enter")
+              input(" ➥ Enter.")
               continue
             
           except:
@@ -528,16 +540,25 @@ def coins():
             input(" ➥ Enter.")
             continue
           
-        total = sgxc + fee
-        gcoins -= total
-        gxc += sgxc * rate_Gxc
-        Shasil = sgxc * rate_Gxc
+        hasil_swap = sgxc - fee
+        if hasil_swap <= 0:
+            print(" ")
+            print(" \033[31mJumlah swap terlalu kecil !\033[0m")
+            print(" ")
+            input(" ➥ Enter")
+            continue
+
+        gcoins -= sgxc
+        gxc += hasil_swap * rate_Gxc
+        Shasil = hasil_swap * rate_Gxc
+        
         
         gcoins = round(gcoins, 3)
         gxc = round(gxc, 3)
         
         print(" ")
         ldSwp()
+        exp += 1
         print(" ")
         print(" ")
         print(f" Hasil swap = \033[32m{Shasil}\033[0m") 
@@ -548,7 +569,7 @@ def coins():
       
     elif cmd == "n":
       print(" ")
-      print("membatalkan swap(\033[31mExit\033[0m) !")
+      print(" ➥ Membatalkan swap(\033[31mExit\033[0m) !")
       print(" ")
       wkt()
       break
@@ -591,60 +612,105 @@ def toko_bibit():
       
       if ubeli == "1":
         if gxc >= t1_1:
-            if tas >= 7:
-                print("proses membeli item bibit »")
+            if tas <= 100:
+                print(" ")
+                print(" ➥ Proses membeli item bibit »")
+                print(" ")
                 wkt()
+                print(" ")
+                exp += 1
                 bibit += 1
                 tas += 2
                 gxc -= t1_1
                 gxc = round(gxc, 3)
-                print("Sukses ✓")
+                print(" \033[32mSukses ✓\033[0m")
+                print(" ")
                 input("Tekan Enter...")
             else:
-                print(" \033[33mTas kamu penuh !\033[0m")
+                print(" ")
+                print(" \033[31mTas kamu penuh !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
         else:
-            print("proses membeli item bibit »")
+            print(" ")
+            print(" ➥ Proses membeli item bibit »")
+            print(" ")
             wkt()
-            print("Token Gxc tidak cukup!")
+            print(" ")
+            print(" \033[31mToken Gxc tidak cukup !\033[0m")
+            print(" ")
+            input(" ➥ Enter. ")
             continue
         
       elif ubeli == "3":
         if gxc >= t1_3:
-          print("proses membeli item bibit »")
-          wkt()
-          bibit += 3
-          tas += 6
-          gxc -= t1_3
-          gxc = round(gxc, 3)
-          print("Sukses ✓")
-          input("Tekan Enter...")
+            if tas <= 100:
+                print(" ")
+                print(" ➥ Proses membeli item bibit »")
+                print(" ")
+                wkt()
+                print(" ")
+                exp += 3
+                bibit += 3
+                tas += 6
+                gxc -= t1_3
+                gxc = round(gxc, 3)
+                print(" \033[32Sukses ✓\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+            else:
+                print(" ")
+                print(" \033[31mTas kamu penuh !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
         else:
-          print("proses membeli item bibit »")
-          wkt()
-          print("Token Gxc tidak cukup!")
-          continue
+            print(" ")
+            print(" ➥ Proses membeli item bibit »")
+            print(" ")
+            wkt()
+            print(" ")
+            print(" \033[31mToken Gxc tidak cukup !\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
+            continue
           
       elif ubeli == "5":
         if gxc >= t1_5:
-          print("proses membeli item bibit »")
-          wkt()
-          bibit += 5
-          tas += 10
-          gxc -= t1_5
-          gxc = round(gxc, 3)
-          print(" Sukses ✓")
-          print(" ")
-          input(" ➥Enter.")
+            if tas <= 100:
+                print(" ")
+                print(" ➥ Proses membeli item bibit »")
+                print(" ")
+                wkt()
+                print(" ")
+                exp += 5
+                bibit += 5
+                tas += 10
+                gxc -= t1_5
+                gxc = round(gxc, 3)
+                print(" \033[32mSukses ✓\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+            else:
+                print(" ")
+                print(" \033[31mTas kamu penuh !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
         else:
-          print("proses membeli item bibit »")
-          wkt()
-          print("Token Gxc tidak cukup!")
-          continue
+            print(" ")
+            print(" ➥ Proses membeli item bibit »")
+            print(" ")
+            wkt()
+            print(" ")
+            print(" \033[31mToken Gxc tidak cukup !\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
+            continue
           
       else:
-        print("input kode salah!")
-        print(" ")
-        input(" ➥ Enter.")
+          print(" ")
+          print(" \033[31mInput kode salah !\033[0m")
+          print(" ")
+          input(" ➥ Enter.")
           
   
 while True:
@@ -682,9 +748,10 @@ while True:
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
     print(" ")
-    print("\033[32mNote\033[0m : \033[36mProgres Game 20%\033[0m")
+    print("\033[32mNote\033[0m : \033[36mProgres Game » [25%]\033[0m")
     print(" ")
-    
+    print(" \033[32m» Raih 28 exp untuk menyelesaikan game ✓\033[0m")
+    print(" ")
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
     print("╚══════════╝")
@@ -863,12 +930,14 @@ while True:
         elif Hp >= 2:
           if bibit >= 1:
             print(" ")
-            print(" mulai menanam.")
+            print(" ➥ Mulai menanam.")
             print(" ")
+            exp += 2
             Hp -= 2
             wkt()
             bibit -= 1
             tas -= 2
+            print(" ")
             tanam.add((userx1, usery1))
             print(" \033[32mSukses menanam ✓\033[0m")
             print(" ")
@@ -881,7 +950,7 @@ while True:
             input(" ➥ Enter.")
         else:
           print(" ")
-          print(" ♥️ = 🔋")
+          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -905,23 +974,26 @@ while True:
       if pos in kbn:
         print(" ")
         print(" \033[33mHanya bisa dilahan menanam!\033[0m")
+        input(" ➥ Enter.")
         
       elif pos in pt:
         if Hp >= 2:
           print(" ")
-          print(" Mulai menebang.")
+          print(" ➥ Mulai menebang.")
           print(" ")
           wkt()
+          print(" ")
+          exp += 5
           Hp -= 2
           pohon_tanam.remove(pos)
           gxc += 19
           gxc = round(gxc, 3)
-          print(" Menebang sukses ✓")
+          print(" \033[32mMenebang sukses ✓\033[0m")
           print(" ")
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" ♥️ = 🔋")
+          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -959,7 +1031,7 @@ while True:
       if pos in obj:
         if Hp >= 3:
           print(" ")
-          print(" Mulai menebang...")
+          print(" ➥ Mulai menebang...")
           print(" ")
           Hp -= 3
           gcoins += 7
@@ -970,10 +1042,11 @@ while True:
           ldtb()
           print(" ")
           tas += 3
+          exp += 2
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" ♥️ = 🔋")
+          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -991,7 +1064,7 @@ while True:
       if pos in obj:
         if Hp >= 3:
           print(" ")
-          print(" Mulai menebang...")
+          print(" ➥ Mulai menebang...")
           print(" ")
           Hp -= 3
           gcoins += 7
@@ -1002,10 +1075,11 @@ while True:
           ldtb()
           print(" ")
           tas += 3
+          exp += 2
           input(" ➥ Enter.")
         else:
           print(" ")
-          print(" ♥️ = 🔋")
+          print(" \033[31mIsi Energi\033[0m»♥️ = 🔋«")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1080,4 +1154,8 @@ while True:
         print(" ")
         input(" ➥ Enter.")
         toko_bibit()
-  
+
+  if exp == 28:
+    print(" \033[32mGame Selesai ✓\033[0m")
+    break
+    
