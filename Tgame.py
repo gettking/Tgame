@@ -1,3 +1,5 @@
+print(" ")
+
 import random
 import string
 import time
@@ -17,7 +19,7 @@ casE = 0
 #Global
 pusing = 0
 info = ""
-
+box_penyimpanan = {}
 
 #map_kebun
 kebunx, kebuny = 11, 5
@@ -62,12 +64,14 @@ Tokbit = {
 bpasarx, bpasary = 0, 0
 
 #data_user
-Hp = 100
+Hp = 0
 tas = 0
 gxc = 0
 gcoins = 0
 bibit = 0
 exp = 0
+kayu = 0
+kayuT1 = 0 
 
 #walls_rumah
 walls = {
@@ -77,7 +81,7 @@ walls = {
 
 #walls_kebun
 wallsk = {
-  (0, 1), (1, 1)
+  (0, 1), (1, 1),(2, 1)
 }
 
 #walls_pasar
@@ -236,8 +240,13 @@ def d_rumah():
   #info_kordinat_player
   pos = (userx, usery)
   print(f"              \033[32m{pos}\033[0m   ")
-  
+  #2
+  print(box_penyimpanan)
+  #3
+  print(kayu)
+  print(kayuT1)
   print("│---------------------------------│")
+
   
   #infopusing:p
   print(info)
@@ -245,27 +254,27 @@ def d_rumah():
   pos = (userx, usery)
   ob = (coinx, coiny)
   if pos == ob:
-    print("│ [\033[33mBrangkas\033[0m] m untuk masuk »      │")
+    print(" [\033[33mBrangkas\033[0m] m untuk masuk »")
     
   pos = (userx, usery)
   ob = (crafx, crafy)
   if pos == ob:
-    print("│ [\033[32mKerajinan\033[0m] m untuk masuk »     │")
+    print(" [\033[32mKerajinan\033[0m] m untuk masuk »")
     
   pos = (userx, usery)
   ob = (pintux, pintuy)
   if pos == ob:
-    print("│ Exit [\033[32mkebun\033[0m] m untuk pergi »    │")
+    print(" Exit [\033[32mkebun\033[0m] m untuk pergi »")
     
   pos = (userx, usery)
   ob = (invx, invy)
   if pos == ob:
-    print("│ [\033[32mPenyimpanan\033[0m] m untuk masuk »   │")
+    print(" [\033[32mPenyimpanan\033[0m] m untuk masuk »")
     
   pos = (userx, usery)
   ob = (casx, casy)
   if pos == ob:
-    print("│ [\033[33mEnergi\033[0m] m untuk mengisi »      │")
+    print(" [\033[33mEnergi\033[0m] m untuk mengisi »")
   
   print("│---------------------------------│")
   print(" ")
@@ -350,10 +359,11 @@ def d_kebun():
   pos = (userx1, usery1)
   ob = (ppasarx, ppasary)
   if pos == ob:
-    print(" » [\033[32mPasar\033[0m] m untuk pergi kepasar.")
+    print(" » [\033[32mPasar\033[0m] m untuk pergi kepasar")
   
   
   print("|-----------------------------------|")
+  print(" ")
   
   for y in range(kebuny):
     ln = ""
@@ -431,6 +441,7 @@ def d_pasar():
   
   
   print("|-----------------------------------|")
+  print(" ")
   
   for y in range(pasary):
     ln = ""
@@ -493,9 +504,11 @@ def coins():
         fee = 0.5
         
         os.system("clear")
+        print(" ")
         print("┌──────────────────┐")
         print("│x untuk kembali ⇐ │")
         print("└──────────────────┘")
+        print(" ")
         jswap=(input(" ➥ Masukkan jumlah or Max : "))
         
         #BACK
@@ -600,7 +613,7 @@ def toko_bibit():
     print(" Tersedia:\n(1) Bibit pohon t.1\n(2) Coming Soon\n(x) Keluar")
     print(" ")
   
-    cmd=input(" Beli : ").lower()
+    cmd=input(" ➥ Pilih : ").lower()
     
     #testing
     if cmd == "x":
@@ -659,7 +672,7 @@ def toko_bibit():
                 gxc -= t1_3
                 gxc = round(gxc, 3)
                 print(" ")
-                print(" \033[32Sukses ✓\033[0m")
+                print(" \033[32mSukses ✓\033[0m")
                 print(" ")
                 input(" ➥ Enter.")
             else:
@@ -718,16 +731,358 @@ def toko_bibit():
           input(" ➥ Enter.")
 
 def penyimpanan():
+  global bibit, gxc, kayu, kayuT1, box_penyimpanan, tas
   
-  print(" ")
-  print(" Halo ")
-  print(" ")
+  while True:
+      
+    os.system("clear")
     
+    print(" ")
+    print(" ➧ \033[32mTempat penyimpanan.\033[0m")
+    print(" ")
+    print(" ➥  \033[36mBarang yang disimpan »\033[0m(0)")
+    print(" ➥  \033[36mSimpan barang        »\033[0m(1)")
+    print(" ➥  \033[36mAmbil barang         »\033[m(2)")
+    print(" ➥  \033[33mBuang barang         »\033[0m(3)")
+    print(" ➥  exit                 »(x)")
+    print(" ")
+    cmd=input(" Pilih : ").lower()
+    
+    if cmd == "0":
+      print(" ")
+      wkt()
+      
+      while True:
+         #2 
+        os.system("clear")
+        print(" ")
+        print(" ➧ \033[36mBarang yang disimpan :\033[0m")
+        print(" ")
+        print(f" ➥ 🫘     = \033[32m{box_penyimpanan.get("bibit", 0)}\033[0m")
+        print(f" ➥ 🪵     = \033[32m{box_penyimpanan.get("kayu", 0)}\033[0m")
+        print(f" ➥ 🪵 T.1 = \033[32m{box_penyimpanan.get(f"kayuT1", 0)}\033[0m")
+        print(f" ➥  Ⓖ     = \033[32m{box_penyimpanan.get("gxc", 0)}\033[0m")
+        print(" ")
+        print(" ➥ Kembali »(k)")
+        print(" ")
+        pilih = input(" pilih : ").lower()
+        
+        if pilih == "k":
+          print(" ")
+          print(" ➥ Kembali.")
+          print(" ")
+          wkt()
+          break
+        
+        else:
+          print(" ")
+          print(" \033[31mInput salah !\033[0m")
+          print(" ")
+          input(" ➥ Enter. ")
+        
+    
+    elif cmd == "1":
+      print(" ")
+      wkt()
+      
+      while True:
+          
+        os.system("clear")
+        
+        print(" ")
+        print(" » \033[32mSimpan barang\033[0m «")
+        print(" ")
+        print(" ➥ \033[36mSimpan semua barang   »\033[0m(1)")
+        print(" ➥ \033[36mPilih beberapa barang »\033[0m(2)")
+        print(" ➥ Kembali               »(x)")
+        print(" ")
+        simpan=input(" Pilih : ").lower()
+        
+        if simpan == "1":
+          print(" ")
+          wkt()
+          #1
+          while True:
+            
+            os.system("clear")
+            #4
+            info_kaptasbit = bibit * 2
+            info_kaptasyu = kayu * 1
+            info_kpatasyut1 = kayuT1 * (2/3)
+            if bibit > 0 or kayu > 0 or kayuT1 > 0 and gxc > 0:
+              if "bibit" in box_penyimpanan or "kayu" in box_penyimpanan or "kayuT1" in box_penyimpanan or "gxc" in box_penyimpanan:
+                print(" ")
+                print(" ➥ Proses menyimpan »")
+                print(" ")
+                box_penyimpanan["bibit"] += bibit
+                box_penyimpanan["kayu"] += kayu
+                box_penyimpanan["kayuT1"] += kayuT1
+                box_penyimpanan["gxc"] += gxc
+                tas -= info_kaptasbit
+                tas -= info_kaptasyu
+                tas = info_kpatasyut1
+                bibit = 0
+                kayu = 0
+                kayuT1 = 0
+                gxc = 0
+                wkt()
+                print(" ")
+                print(" ")
+                print(" \033[32mSukses ✓\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+                break
+              else:
+                print(" ")
+                print(" ➥ Proses menyimpan »")
+                print(" ")
+                box_penyimpanan["bibit"] = bibit
+                box_penyimpanan["kayu"] = kayu
+                box_penyimpanan["kayuT1"] = kayuT1
+                box_penyimpanan["gxc"] = gxc
+                tas -= info_kaptasbit
+                tas -= info_kaptasyu
+                tas -= info_kpatasyut1
+                bibit = 0
+                kayu = 0
+                kayuT1 = 0
+                gxc = 0
+                wkt()
+                print(" ")
+                print(" \033[32mSukses ✓\033[0m" )
+                print(" ")
+                input(" ➥ Enter.")
+                break
+            else:
+              print(" ")
+              print(" ")
+              print(" \033[31mTas mu tidak memiliki item !\033[0m")
+              print(" ")
+              input(" ➥ Enter.")
+              break
+          
+        elif simpan == "2":
+          print(" ")
+          wkt()
+          
+          while True:
+            
+            os.system("clear")
+            
+            print(" ")
+            print(" ➧ \033[32mPilih barang »\033[0m")
+            print(" ")
+            print(" ➥ \033[36mBibit    »\033[0m(1)")
+            print(" ➥ \033[36mKayu     »\033[0m(2)")
+            print(" ➥ \033[36mKayu T.1 »\033[0m(3)")
+            print(" ➥ \033[36mKoin Gxc »\033[0m(4)")
+            print(" ➥ Kembali  »(x)")
+            print(" ")
+            psimpan=input(" ➥ Pilih :  ").lower()
+            
+            if psimpan == "1":
+              
+              info_kaptasbit = bibit * 2
+              if bibit > 0:
+                if "bibit" in box_penyimpanan:
+                  print(" ")
+                  print(" Proses menyimpan bibit »")
+                  print(" ")
+                  box_penyimpanan["bibit"] += bibit
+                  tas -= info_kaptasbit
+                  bibit = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan bibit ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                  
+                else:
+                  print(" ")
+                  print(" Proses menyimpan bibit »")
+                  print(" ")
+                  box_penyimpanan["bibit"] = bibit
+                  tas -= info_kaptasbit
+                  bibit = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan bibit ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                  
+              else:
+                print(" ")
+                print(" \033[31mTas mu tidak ada item bibit !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+                
+            elif psimpan == "2":
+              
+              info_kaptasyu = kayu * 1
+              if kayu > 0:
+                if "kayu" in box_penyimpanan:
+                  print(" ")
+                  print(" Proses menyimpan kayu »")
+                  print(" ")
+                  box_penyimpanan["kayu"] += kayu
+                  tas -= info_kaptasyu
+                  kayu = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan kayu ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                  
+                else:
+                  print(" ")
+                  print(" Proses menyimpan kayu »")
+                  print(" ")
+                  box_penyimpanan["kayu"] = kayu
+                  tas -= info_kaptasyu
+                  kayu = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan kayu ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+              
+              else:
+                print(" ")
+                print(" \033[31mTas mu tidak ada item kayu !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+            
+            elif psimpan == "3":
+              
+              info_kpatasyut1 = kayuT1 * (2/3)
+              if kayuT1 > 0:
+                if "kayuT1" in box_penyimpanan:
+                  print(" ")
+                  print(" Proses menyimpan kayu T.1 »")
+                  print(" ")
+                  box_penyimpanan["kayuT1"] += kayuT1
+                  tas -= info_kpatasyut1
+                  kayuT1 = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan kayu T.1 ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                
+                else:
+                  print(" ")
+                  print(" Proses menyimpan kayu T.1 »")
+                  print(" ")
+                  box_penyimpanan["kayuT1"] = kayuT1
+                  tas -= info_kpatasyut1
+                  kayuT1 = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan kayu T.1 ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+              
+              else:
+                print(" ")
+                print(" \033[31mTas mu tidak ada item kayu T.1 !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+            
+            elif psimpan == "4":
+              
+              if gxc > 0:
+                if "gxc" in box_penyimpanan:
+                  print(" ")
+                  print(" Proses menyimpan Koin Gxc »")
+                  print(" ")
+                  box_penyimpanan["gxc"] += gxc
+                  gxc = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan koin Gxc ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                
+                else:
+                  print(" ")
+                  print(" Proses menyimpan koin Gxc »")
+                  print(" ")
+                  box_penyimpanan["gxc"] = gxc
+                  gxc = 0
+                  wkt()
+                  print(" ")
+                  print(" ")
+                  print(" \033[32mSukses menyimpan koin Gxc ✓\033[0m")
+                  print(" ")
+                  input(" ➥ Enter.")
+                  
+              else:
+                print(" ")
+                print(" \033[31mKamu belum memiliki koin Gxc !\033[0m")
+                print(" ")
+                input(" ➥ Enter.")
+            
+                
+            
+            elif psimpan == "x":
+              print(" ")
+              print(" ➥ Kembali.")
+              print(" ")
+              wkt()
+              break
+            
+            else:
+              print(" ")
+              print(" \033[31mInput salah !\033[0m")
+              print(" ")
+              input(" ➥ Enter.")
+              
+              
+          
+        elif simpan == "x":
+          print(" ")
+          print(" ➥ Kembali")
+          print(" ")
+          wkt()
+          break
+           
+        else:
+          print(" ")
+          print(" \033[31mInput salah 2!\033[0m")
+          print(" ")
+          input(" ➥ Enter.")
+            
+            
+      
+    
+    elif cmd == "x":
+      print(" ")
+      print(" ➥ Keluar")
+      print(" ")
+      wkt()
+      break
+        
+    else:
+      print(" ")
+      print(" \033[31mInput salah 1!\033[0m")
+      print(" ")
+      input(" ➥ Enter.")
+        
+      
+      
 def kerajinan():
   
   print(" ")
   print(" Kerajinan ")
   print(" ")
+  input(" ➥ Enter.")
           
   
 while True:
@@ -766,8 +1121,6 @@ while True:
     
     print(" ")
     print("\033[32mNote\033[0m : \033[36mProgres Game » [25.2%]\033[0m")
-    print(" ")
-    print(" \033[32m» Raih 10 [exp], kondisi [Hp] 10%, dan\nkumpulkan 10 [bibit] untuk menyelesaikan game ✓\033[0m")
     print(" ")
     print("╔══════════╗")
     print("║\033[95mMade In\033[0m ♥️ ║ × ☕ + ✊")
@@ -838,8 +1191,6 @@ while True:
       userx, usery = oldx, oldy
       info = " \033[33maduhhh 😵\033[0m"
       pusing = 3
-      if tas > 0:
-        tas -= 3
     else:
         info = ""
      
@@ -946,8 +1297,6 @@ while True:
       userx1, usery1 = oldx, oldy
       pusing = 3
       info = " \033[33maduhhh 😵\033[0m"
-      if tas > 0:
-        tas -= 3
     else:
         info = ""
       
@@ -998,11 +1347,11 @@ while True:
         print(" \033[31mHanya bisa dilahan menanam!\033[0m")
         print(" ")
         input(" ➥ Enter.")
-    #1111111111   
+    
     #PART_menebang
     if cmd == "x":
       pos = (userx1, usery1)
-      kbn = (kebunx, kebuny)
+      lhn = k_lahan
       tm = tanam
       pt = pohon_tanam
       if pos in tm:
@@ -1011,36 +1360,47 @@ while True:
         print(" ")
         input(" ➥ Enter.")
       
-      if pos in kbn:
+      elif pos in lhn:
         print(" ")
-        print(" \033[33mHanya bisa dilahan menanam!\033[0m")
+        print(" \033[33mTidak ada objek tanaman !\033[0m")
+        print(" ")
         input(" ➥ Enter.")
         
       elif pos in pt:
         if Hp >= 2:
-          print(" ")
-          print(" ➥ Mulai menebang.")
-          print(" ")
-          wkt()
-          print(" ")
-          exp += 5
-          Hp -= 2
-          pohon_tanam.remove(pos)
-          gxc += 19
-          gxc = round(gxc, 3)
-          print(" \033[32mMenebang sukses ✓\033[0m")
-          print(" ")
-          input(" ➥ Enter.")
+          if tas <= 100:
+            print(" ")
+            print(" ➥ Mulai menebang.")
+            print(" ")
+            wkt()
+            print(" ")
+            kayuT1 += 3
+            tas += 2
+            exp += 5
+            Hp -= 2
+            pohon_tanam.remove(pos)
+            gxc += 19
+            gxc = round(gxc, 3)
+            print(" \033[32mMenebang sukses ✓\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
+          else:
+            print(" ")
+            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
           print(" ")
           input(" ➥ Enter.")
+    
       else:
         print(" ")
-        print(" \033[31mTidak ada objek tanaman!\033[0m")
+        print(" \033[31mBukan diarea lahan !\033[0m")
         print(" ")
         input(" ➥ Enter.")
+          
     
     #PART_kembali kerumah
     if cmd == "m":
@@ -1070,24 +1430,30 @@ while True:
       obj = pohon1
       if pos in obj:
         if Hp >= 3:
-          print(" ")
-          print(" ➥ Mulai menebang...")
-          print(" ")
-          Hp -= 3
-          gcoins += 7
-          gcoins = round(gcoins, 3)
-          pohon1.remove((userx1, usery1))
-          respawn1[userx1, usery1] = now1 + w_tumbuh1
-          print(" ")
-          ldtb()
-          print(" ")
-          tas += 3
-          exp += 2
-          print(" ")
-          input(" ➥ Enter.")
+          if tas <= 100:
+            print(" ")
+            print(" ➥ Mulai menebang...")
+            print(" ")
+            kayu += 1
+            Hp -= 3
+            gcoins += 7
+            gcoins = round(gcoins, 3)
+            pohon1.remove((userx1, usery1))
+            respawn1[userx1, usery1] = now1 + w_tumbuh1
+            ldtb()
+            print(" ")
+            tas += 1
+            exp += 2
+            print(" ")
+            input(" ➥ Enter.")
+          else:
+            print(" ")
+            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" ")
+            input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1104,24 +1470,28 @@ while True:
       obj = pohon2
       if pos in obj:
         if Hp >= 3:
-          print(" ")
-          print(" ➥ Mulai menebang...")
-          print(" ")
-          Hp -= 3
-          gcoins += 7
-          gcoins = round(gcoins, 3)
-          pohon2.remove((userx1, usery1))
-          respawn2[userx1, usery1] = now2 + w_tumbuh2
-          print(" ")
-          ldtb()
-          print(" ")
-          tas += 3
-          exp += 2
-          print(" ")
-          input(" ➥ Enter.")
+          if tas <= 100:
+            print(" ")
+            print(" ➥ Mulai menebang...")
+            print(" ")
+            kayu += 1
+            Hp -= 3
+            gcoins += 7
+            gcoins = round(gcoins, 3)
+            pohon2.remove((userx1, usery1))
+            respawn2[userx1, usery1] = now2 + w_tumbuh2
+            ldtb()
+            print(" ")
+            tas += 1
+            exp += 2
+            print(" ")
+            input(" ➥ Enter.")
+          else:
+            print(" ")
+            print(" \033[31mTas kamu penuh !\033[0m")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1167,8 +1537,6 @@ while True:
       userxp, useryp = oldx, oldy
       pusing = 3
       info = " \033[33maduhhh 😵\033[0m"
-      if tas > 0:
-        tas -= 3
     else:
         info = ""
         
