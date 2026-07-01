@@ -6,15 +6,25 @@ import time
 import os
 ####0000
 #map_rumah
-rumahx, rumahy = 5, 5
-userx, usery = 2, 2
-coinx, coiny = 0, 0
-invx, invy = 4, 0
-crafx, crafy = 0, 4
-casx, casy = 4, 4
+rumahx, rumahy = 21, 10
+userx, usery = 0, 8
+coinx, coiny = 1, 1
+invx, invy = 7, 1
+crafx, crafy = 1, 3
+casx, casy = 3, 8
+kesetx, kesety= 8, 3
+lantai ={
+    (3, 0), (4, 0), (5, 0), (6, 0), (3, 1),
+    (4, 1), (5, 1), (6, 1), (1, 2), (2, 2),
+    (3, 2), (3, 3), (4, 3), (5, 3), (6, 3),
+    (3, 4), (0, 5), (1, 5), (2, 5), (3, 5),
+    (0, 6), (1, 6), (2, 6), (3, 6), (0, 7),
+    (1, 7), (2, 7), (3, 7), (0, 8), (1, 8)
+}
 respawnC = {}
 w_isi = 45
-pintux, pintuy = 4, 2
+pinturx, pintury = 7, 3
+pintux, pintuy = 20, 9
 casE = 0
 #Global
 pusing = 0
@@ -22,7 +32,7 @@ info = ""
 box_penyimpanan = {}
 
 #map_kebun
-kebunx, kebuny = 11, 5
+kebunx, kebuny = 21, 10
 userx1, usery1 = 1, 0
 pintux1, pintuy1 = 0, 0
 flagx1, flagy1 = 1, 0
@@ -75,8 +85,13 @@ kayuT1 = 0
 
 #walls_rumah
 walls = {
-  (1, 1), (2, 1), (3, 1), #(3, 2),
-  (3, 3), (2, 3), (1, 3)
+  (0, 0), (0, 1), (0, 2), (0, 3), (0, 4),
+  (4, 2), (4, 4), (4, 5), (4, 6), (4, 7),
+  (4, 8), (4, 9), (5, 2), (6, 2), (7, 2),
+  (8, 2), (8, 1), (8, 0), (0, 9), (1, 9),
+  (2, 9), (3, 9), (7, 0), (1, 0), (2, 0),
+  (2, 1), (1, 4), (2, 4), (2, 3), (2, 8),
+  (5, 4), (6, 4), (7, 4), (8, 4)
 }
 
 #walls_kebun
@@ -133,19 +148,19 @@ def ldkb():
 def ldcasfull():
   
   for i in [
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " \033[33mDaya sudah full !\033[0m"
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " \033[33mNanti aja ah masih kenyang !\033[0m"
     ]:
       print(f"\r{i}", end="", flush=True)
       time.sleep(0.3)
@@ -153,19 +168,19 @@ def ldcasfull():
 def ldcas():
   
   for i in [
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " » Mengisi Daya «",
-    " \033[31m»\033[0m Mengisi Daya \033[31m«\033[0m",
-    " \033[33m»\033[0m Mengisi Daya \033[33m«\033[0m",
-    " \033[32m»\033[0m Mengisi Daya \033[32m«\033[0m",
-    " \033[32mDaya terisi penuh ✓\033[0m"
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " » Memulai eumam «",
+    " \033[31m»\033[0m Memulai eumam \033[31m«\033[0m",
+    " \033[33m»\033[0m Memulai eumam \033[33m«\033[0m",
+    " \033[32m»\033[0m Memulai eumam \033[32m«\033[0m",
+    " \033[32mAlhamdulillah kenyang juga ✓\033[0m"
     ]:
       print(f"\r{i}", end="", flush=True)
       time.sleep(0.3)
@@ -225,32 +240,42 @@ def wkt(delay=0.15):
         time.sleep(delay)
 wkt()
 
+
+#dashboard
+def infopemain():
+  print("┌───────────────────────────────┐")
+  print(f"│🍚: {Hp:<5} 🎒: {tas:<5} 🅶: {gxc:<8}│")
+  print("└───────────────────────────────┘")
+  print(" ➥ \033[36mMembuka tas [i]\033[0m")
+
+def isiTas():
+    
+  while True:
+    os.system("clear")
+    print(f" ➥ Gcoins   : \033[33m{gcoins}\033[0m")
+    
+    print(f" ➥ Kayu     : \033[36m{kayu}\033[0m")
+    print(f" ➥ Kayu T.1 : \033[36m{kayuT1}\033[0m")
+    print(f" ➥ Bibit    : \033[36m{bibit}\033[0m")
+    
+    back=input(" ⇐ Kembali [x] : ").lower()
+    if back == "x":
+      break
+    
+  
 #FUNGSI RUMAH
 def d_rumah():
     
-  global userx, usery
-
+  pos= (userx, usery)
   print("┌─────────┐")
-  print("│🏠\033[32m Rumah\033[0m │")
+  print(f"│🏠\033[36m Rumah\033[0m │ \033[32m{pos}\033[0m")
   print("└─────────┘")
-  print("┌─────────────────────────────┐")
-  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
-  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
-  print("└─────────────────────────────┘")
-  #info_kordinat_player
-  pos = (userx, usery)
-  print(f"              \033[32m{pos}\033[0m   ")
-  #1
-  print(box_penyimpanan)
-  #2
-  print(kayu)
-  print(kayuT1)
+  infopemain()
   print("│---------------------------------│")
-
   
   #infopusing:p
   print(info)
-  
+
   pos = (userx, usery)
   ob = (coinx, coiny)
   if pos == ob:
@@ -285,7 +310,7 @@ def d_rumah():
         
       if (x, y) == (userx, usery):
         if casE > 0:
-          ln += "⚡"
+          ln += "🥄"
         elif pusing > 0:
           ln += "😵"
         else:
@@ -298,15 +323,21 @@ def d_rumah():
       elif (x, y) == (crafx, crafy):
         ln += "🧩"
       elif (x, y) == (casx, casy):
-        ln += "🔋"
+        ln += "🍚"
       elif (x, y) in respawnC:
-        ln += "🪫"
-      elif (x, y) == (pintux, pintuy):
+        ln += "🥣"
+      elif (x, y) == (pinturx, pintury):
         ln += "🚪"
+      elif (x, y) == (pintux, pintuy):
+        ln += "❇️"
+      elif (x, y) in lantai:
+        ln += "⬜"
+      elif (x, y) == (kesetx, kesety):
+        ln += "🔳"
       elif (x, y) in walls:
         ln += "🧱"
       else:
-        ln += "⬜"
+        ln += "🟩"
         
     print(ln)
     
@@ -314,19 +345,11 @@ def d_rumah():
 #FUNGSI KEBUN
 def d_kebun():
   
-  print("┌─────────┐")
-  print("│🏡\033[32m Kebun\033[0m │")
-  print("└─────────┘")
-  
-  print("┌─────────────────────────────┐")
-  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
-  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
-  print("└─────────────────────────────┘")
-  
-  #info_kordinat_player
   pos = (userx1, usery1)
-  print(f"              \033[32m{pos}\033[0m   ")
-  
+  print("┌─────────┐")
+  print(f"│🏡\033[33m Kebun\033[0m │ \033[32m{pos}\033[0m")
+  print("└─────────┘")
+  infopemain()
   print("|-----------------------------------|")
   
   print(info)
@@ -406,19 +429,11 @@ def d_kebun():
   
 def d_pasar():
   
-  print("┌─────────┐")
-  print("│🛍\033[32m Pasar\033[0m  │")
-  print("└─────────┘")
-
-  print("┌─────────────────────────────┐")
-  print(f"│🔋: {Hp:<5} 🎒: {tas:<5} Ⓖ: {gxc:<6}│")
-  print(f"│🫘: {bibit:<5}  ✦: {exp:<5} ⓖ: {gcoins:<5} │")
-  print("└─────────────────────────────┘")
-  
-  #info_kordinat_player
   pos = (userxp, useryp)
-  print(f"              \033[32m{pos}\033[0m   ")
-  
+  print("┌─────────┐")
+  print(f"│🛍\033[33m Pasar\033[0m  │ \033[32m{pos}\033[0m")
+  print("└─────────┘")
+  infopemain()
   print("|-----------------------------------|")
   
   print(info)
@@ -438,8 +453,6 @@ def d_pasar():
   if pos in ob:
     print(" [\033[32mToko Bibit\033[0m] m untuk masuk »")
     
-  
-  
   print("|-----------------------------------|")
   print(" ")
   
@@ -756,7 +769,7 @@ def penyimpanan():
          #2 
         os.system("clear")
         print(" ")
-        print(" ➧ \033[36mBarang yang disimpan :\033[0m")
+        print(f" ➧ \033[36mBarang yang disimpan :\033[0m 🎒 = ", tas)
         print(" ")
         print(f" ➥ 🫘     = \033[32m{box_penyimpanan.get("bibit", 0)}\033[0m")
         print(f" ➥ 🪵     = \033[32m{box_penyimpanan.get("kayu", 0)}\033[0m")
@@ -809,7 +822,7 @@ def penyimpanan():
             info_kaptasbit = bibit * 2
             info_kaptasyu = kayu * 1
             info_kpatasyut1 = kayuT1 * (2/3)
-            if bibit > 0 or kayu > 0 or kayuT1 > 0 and gxc > 0:
+            if bibit > 0 or kayu > 0 or kayuT1 > 0 or gxc > 0:
               if "bibit" in box_penyimpanan or "kayu" in box_penyimpanan or "kayuT1" in box_penyimpanan or "gxc" in box_penyimpanan:
                 print(" ")
                 print(" ➥ Proses menyimpan »")
@@ -820,7 +833,7 @@ def penyimpanan():
                 box_penyimpanan["gxc"] += gxc
                 tas -= info_kaptasbit
                 tas -= info_kaptasyu
-                tas = info_kpatasyut1
+                tas -= info_kpatasyut1
                 bibit = 0
                 kayu = 0
                 kayuT1 = 0
@@ -1393,6 +1406,8 @@ while True:
       worldpos = "start"
     if cmd == "k":
       worldpos = "kebun"
+    if cmd == "i":
+      isiTas()
     
     if cmd == "w":
       usery -= 1
@@ -1501,6 +1516,8 @@ while True:
     
     oldx, oldy = userx1, usery1
     
+    if cmd == "i":
+      isiTas()
     if cmd == "w":
       usery1 -= 1
     elif cmd == "s":
@@ -1566,7 +1583,7 @@ while True:
             input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️ = 🔋«")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1612,7 +1629,7 @@ while True:
             input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
           input(" ➥ Enter.")
       
@@ -1680,7 +1697,7 @@ while True:
             input(" ➥ Enter.")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1718,7 +1735,7 @@ while True:
             print(" \033[31mTas kamu penuh !\033[0m")
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🔋 «")
+          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
           input(" ➥ Enter.")
       else:
@@ -1735,6 +1752,9 @@ while True:
     cmd=input(" ➥ perintah : ").lower()
     
     oldx, oldy = userxp, useryp
+    
+    if cmd == "i":
+      isiTas()
     
     if cmd == "w":
       useryp -= 1
