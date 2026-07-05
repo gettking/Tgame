@@ -3,10 +3,9 @@ Game_end = 0
 bookx, booky = 3, 0
 bit1cek = str()
 bit2cek = str()
-kayu0cek = str()
+kayu0cek = ""
 kayu1cek = str()
 kayu2cek = str()
-from quest import quest
 import random
 import string
 import time
@@ -354,19 +353,19 @@ def isiTas():
 def infolvl():
   global lvl
   
-  if exp == 500:
+  if exp >= 500:
     level = 5
     lvl += 1
-  elif exp == 400:
+  elif exp >= 400:
     level = 4
     lvl += 1
-  elif exp == 300:
+  elif exp >= 300:
     level = 3
     lvl += 1
-  elif exp == 200:
+  elif exp >= 200:
     level = 2
     lvl += 1
-  elif exp == 100:
+  elif exp >= 100:
     level = 1
     lvl += 1
   else:
@@ -608,7 +607,7 @@ def d_rumah():
     
   pos= (userx, usery)
   print("┌─────────┐")
-  print(f"│🏠\033[36m Rumah\033[0m │ \033[32m{pos}\033[0m")
+  print(f"│🏠\033[36m Rumah\033[0m │ \033[32m{pos}\033[0m {Game_end}")
   print("└─────────┘")
   infopemain()
   print("│----------------------------------------│")
@@ -718,7 +717,7 @@ def d_kebun():
   
   pos = (userx1, usery1)
   print("┌─────────┐")
-  print(f"│🏡\033[33m Kebun\033[0m │ \033[32m{pos}\033[0m")
+  print(f"│🏡\033[33m Kebun\033[0m │ \033[32m{pos}\033[0m {Game_end}")
   print("└─────────┘")
   infopemain()
   print("|----------------------------------------|")
@@ -816,7 +815,7 @@ def d_pasar():
   
   pos = (userxp, useryp)
   print("┌─────────┐")
-  print(f"│🛍\033[33m Pasar\033[0m  │ \033[32m{pos}\033[0m")
+  print(f"│🛍\033[33m Pasar\033[0m  │ \033[32m{pos}\033[0m {Game_end}")
   print("└─────────┘")
   infopemain()
   print("|----------------------------------------|")
@@ -1162,7 +1161,7 @@ def toko_bibit():
         ubeli=input(" Input kode sesuai pilihan : ").lower()
         
         if ubeli == "1":
-          if lvl == 1:
+          if lvl >= 2:
             if gxc >= t2_1:
               if tas < 100:
                 print(" ")
@@ -1201,7 +1200,7 @@ def toko_bibit():
             input(" ➥ Enter.")
           
         elif ubeli == "3":
-          if lvl == 3:
+          if lvl >= 3:
             if gxc >= t2_3:
               if tas < 100:
                 print(" ")
@@ -1240,7 +1239,7 @@ def toko_bibit():
             input(" ➥ Enter.")
           
         elif ubeli == "5":
-          if lvl == 5:
+          if lvl >= 5:
             if gxc >= t2_5:
               if tas < 100:
                 print(" ")
@@ -2251,34 +2250,31 @@ def book():
 def misi():
   global bibit, bibit2, kayu, kayuT1, kayuT2, Game_end, bit1cek, bit2cek, kayu0cek, kayu1cek, kayu2cek
   
+  if bibit >= 30:
+    bit1cek = "✓"
+    Game_end += 20
+  elif bibit2 >= 15:
+    bit2cek += "✓"
+    Game_end += 20
+  elif kayu >= 70:
+    kayu0cek = "✓"
+    Game_end += 20
+  elif kayuT1 >= 120:
+    kayu1cek += "✓"
+    Game_end += 20
+  elif kayuT2 >= 200:
+    kayu2cek += "✓"
+    Game_end += 20
+  
   while True:
     os.system("clear")
-    
-    
-    if bibit >= 50:
-      bit1cek += "✓"
-      Game_end += 20
-    elif bibit2 >= 45:
-      bit2cek = "✓"
-      Game_end += 20
-    elif kayu >= 50:
-      kayu0cek = "✓"
-      Game_end += 20
-    elif kayuT1 >= 200:
-      kayu1cek = "✓"
-      Game_end += 20
-    elif kayuT2 >= 280:
-      kayu2cek = "✓"
-      Game_end += 20
       
-    print(f"» Bibit T.1 ×50 [\033[32m{bit1cek}\033[0m]")
-    print(f"» Bibit T.2 ×45 [\033[32m{bit2cek}\033[0m]")
-    print(f"» Kayu T.1/2(0) x50 [\033[32m{kayu0cek}\033[0m]")
-    print(f"» Kayu T.1 ×200 [\033[32m{kayu1cek}\033[0m]")
-    print(f"» Kayu T.2 ×280 [\033[32m{kayu2cek}\033[0m]")
-    
-    
-    
+    print(f"» Bibit T.1      ×30  [\033[32m{bit1cek}\033[0m]")
+    print(f"» Bibit T.2      ×15  [\033[32m{bit2cek}\033[0m]")
+    print(f"» Kayu  T.1/2(0) x70  [\033[32m{kayu0cek}\033[0m]")
+    print(f"» Kayu  T.1      ×120 [\033[32m{kayu1cek}\033[0m]")
+    print(f"» Kayu  T.2      ×200 [\033[32m{kayu2cek}\033[0m]")
+    print(" ")
     cmd=input(" Cek Misi [c] - Keluar [x] : ").lower()
     if cmd == "x":
       break
@@ -2293,7 +2289,7 @@ def misi():
         input(" ➥ Enter.")
         continue
     
-#?
+
 while True:
   
   nowA = time.time()
@@ -2559,18 +2555,13 @@ while True:
           print(" Memakan apel »")
           print(" ")
           wkt()
-          Hp += 50
+          Hp += random.randint(20, 50)
           print(" ")
           print(" \033[32mSukses memakan apel ✓\033[0m")
           respawnA[apelx, apely] = nowA + wt_muncul
           apelx, apely = -1, -1
           print(" ")
           input(" ➥ Enter.")
-      else:
-        print(" ")
-        print(" \033[31mEnergi mu masih cukup !\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
   
     #PART_menanam pohon t.1
     if cmd == "p":
@@ -2600,7 +2591,7 @@ while True:
             print(" ")
             exp += 2
             Hp -= 2
-            wkt()
+            time.sleep(1.5)
             bibit -= 1
             tas -= 2
             print(" ")
@@ -2643,7 +2634,7 @@ while True:
             print(" ")
             print(" ➥ Mulai menebang.")
             print(" ")
-            wkt()
+            time.sleep(1.5)
             print(" ")
             kayuT1 += 3
             tas += 2
@@ -2706,7 +2697,7 @@ while True:
             print(" ")
             exp += 6
             Hp -= 4
-            wkt()
+            time.sleep(1.5)
             bibit2 -= 1
             tas -= 3
             print(" ")
@@ -2749,7 +2740,7 @@ while True:
             print(" ")
             print(" ➥ Mulai menebang.")
             print(" ")
-            wkt()
+            time.sleep(1.5)
             print(" ")
             kayuT2 += 6
             tas += 4
@@ -2826,11 +2817,9 @@ while True:
             pohon1.remove((userx1, usery1))
             respawn1[userx1, usery1] = now1 + w_tumbuh1
             ldtb()
-            print(" ")
             tas += 1
             exp += 2
-            print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.12)
           else:
             print(" ")
             print(" \033[31mTas kamu penuh !\033[0m")
@@ -2866,11 +2855,9 @@ while True:
             pohon2.remove((userx1, usery1))
             respawn2[userx1, usery1] = now2 + w_tumbuh2
             ldtb()
-            print(" ")
             tas += 1
             exp += 2
-            print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.12)
           else:
             print(" ")
             print(" \033[31mTas kamu penuh !\033[0m")
