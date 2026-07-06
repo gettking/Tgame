@@ -1,4 +1,150 @@
-print(" ")
+# ═══════════════════════════════════════════════════════════════
+# TGAME ONLINE MULTIPLAYER — FILE TUNGGAL (semua sudah di dalam)
+# Install: pip install paho-mqtt
+# Jalankan: python Tgame_online.py
+# ═══════════════════════════════════════════════════════════════
+
+# ── mp_client (inline) ────────────────────────────────────────
+import types as _types
+_mp_mod = _types.SimpleNamespace()
+
+def _init_mp_module():
+    import json as _json
+    import threading as _threading
+    import time as _time
+
+    _BROKER  = "broker.emqx.io"
+    _PORT    = 1883
+    _PREFIX  = "tgame/v1"
+
+    _state = {
+        "client": None,
+        "lock": _threading.Lock(),
+        "nama": "P1",
+        "room": "defaultroom",
+        "pemain_lain": {},
+        "terhubung": False,
+    }
+
+    def _topik_saya():
+        return f"{_PREFIX}/{_state['room']}/{_state['nama']}"
+
+    def _topik_room_all():
+        return f"{_PREFIX}/{_state['room']}/#"
+
+    def _on_connect(client, userdata, flags, *args, **kwargs):
+        rc = args[0] if args else 0
+        if hasattr(rc, 'value'):
+            rc = rc.value
+        if rc == 0:
+            _state["terhubung"] = True
+            client.subscribe(_topik_room_all(), qos=0)
+        else:
+            _state["terhubung"] = False
+
+    def _on_disconnect(client, userdata, *args, **kwargs):
+        _state["terhubung"] = False
+
+    def _on_message(client, userdata, msg):
+        try:
+            bagian = msg.topic.split("/")
+            if len(bagian) < 4:
+                return
+            nama_pengirim = bagian[3]
+            if nama_pengirim == _state["nama"]:
+                return
+            data = _json.loads(msg.payload.decode("utf-8"))
+            with _state["lock"]:
+                _state["pemain_lain"][nama_pengirim] = {
+                    "n": nama_pengirim,
+                    "w": data.get("w", "Rumah"),
+                    "x": data.get("x", 0),
+                    "y": data.get("y", 0),
+                    "last": _time.time(),
+                }
+        except Exception:
+            pass
+
+    def sambung(room, nama):
+        try:
+            import paho.mqtt.client as mqtt
+        except ImportError:
+            return False
+        _state["nama"]        = (nama or "P1").replace(" ","_").replace("/","_")
+        _state["room"]        = (room or "room1").replace(" ","_").replace("/","_")
+        _state["pemain_lain"] = {}
+        _state["terhubung"]   = False
+        try:
+            try:
+                from paho.mqtt.enums import CallbackAPIVersion
+                cl = mqtt.Client(
+                    callback_api_version=CallbackAPIVersion.VERSION1,
+                    client_id=f"tgame_{_state['nama']}_{int(_time.time())}",
+                )
+            except (ImportError, AttributeError):
+                cl = mqtt.Client(client_id=f"tgame_{_state['nama']}_{int(_time.time())}")
+            cl.on_connect    = _on_connect
+            cl.on_disconnect = _on_disconnect
+            cl.on_message    = _on_message
+            cl.connect(_BROKER, _PORT, keepalive=30)
+            cl.loop_start()
+            for _ in range(60):
+                if _state["terhubung"]:
+                    break
+                _time.sleep(0.1)
+            if _state["terhubung"]:
+                _state["client"] = cl
+                return True
+            cl.loop_stop()
+            return False
+        except Exception:
+            return False
+
+    def terhubung():
+        return _state["terhubung"] and _state["client"] is not None
+
+    def kirim(state_lokal):
+        if terhubung():
+            try:
+                payload = _json.dumps({
+                    "w": state_lokal.get("world","Rumah"),
+                    "x": state_lokal.get("x",0),
+                    "y": state_lokal.get("y",0),
+                })
+                _state["client"].publish(_topik_saya(), payload, qos=0, retain=False)
+            except Exception:
+                pass
+        now = _time.time()
+        with _state["lock"]:
+            mati = [n for n,d in _state["pemain_lain"].items() if now-d.get("last",0)>15]
+            for n in mati:
+                del _state["pemain_lain"][n]
+        return get_others()
+
+    def get_others():
+        with _state["lock"]:
+            return list(_state["pemain_lain"].values())
+
+    def putus():
+        _state["terhubung"] = False
+        if _state["client"]:
+            try:
+                _state["client"].loop_stop()
+                _state["client"].disconnect()
+            except Exception:
+                pass
+            _state["client"] = None
+
+    def nama():
+        return _state["nama"]
+
+    return sambung, terhubung, kirim, get_others, putus, nama
+
+(_mp_mod.sambung, _mp_mod.terhubung, _mp_mod.kirim,
+ _mp_mod.get_others, _mp_mod.putus, _mp_mod.nama) = _init_mp_module()
+del _init_mp_module, _types
+# ── akhir mp_client inline ────────────────────────────────────
+
 Game_end = 0
 bookx, booky = 3, 0
 bit1cek = ""
@@ -10,6 +156,11 @@ import random
 import string
 import time
 import os
+
+_mp = _mp_mod
+MP_AKTIF = True
+NAMA_PEMAIN = "P1"
+_pemain_lain = []   # [{n, w, x, y}, ...] — dari broker
 
 
 ####0000
@@ -182,6 +333,26 @@ wallp = {
 
 worldpos = "start"
 
+# ─── Helper MP ───────────────────────────────
+def _pos_mp():
+    if worldpos == "Rumah":
+        return worldpos, userx, usery
+    elif worldpos == "kebun":
+        return worldpos, userx1, usery1
+    else:
+        return worldpos, userxp, useryp
+
+def _sync_mp():
+    global _pemain_lain
+    if not MP_AKTIF or not _mp.terhubung():
+        return
+    try:
+        w, x, y = _pos_mp()
+        _pemain_lain = _mp.kirim({"world": w, "x": x, "y": y})
+    except Exception:
+        pass
+# ─────────────────────────────────────────────
+
 def ldtb(delay=0.17):
   
   for i in [
@@ -346,12 +517,12 @@ def isiTas():
     print("🧰 :")
     print(f" ➧ \033[36mBarang yang disimpan :\033[0m")
     print(" ")
-    print(f" ➥ Bibit T.1   = \033[32m{box_penyimpanan.get("bibit", 0)}\033[0m")
-    print(f" ➥ Bibit T.2   = \033[32m{box_penyimpanan.get("bibit2", 0)}\033[0m")
-    print(f" ➥ Kayu T.1(0) = \033[32m{box_penyimpanan.get("kayu", 0)}\033[0m")
-    print(f" ➥ Kayu T.1    = \033[32m{box_penyimpanan.get("kayuT1", 0)}\033[0m")
-    print(f" ➥ Kayu T.2    = \033[32m{box_penyimpanan.get("kayuT2", 0)}\033[0m")
-    print(f" ➥ Koin Gxc    = \033[32m{box_penyimpanan.get("gxc", 0)}\033[0m")
+    print(f" ➥ Bibit T.1   = \033[32m{box_penyimpanan.get('bibit', 0)}\033[0m")
+    print(f" ➥ Bibit T.2   = \033[32m{box_penyimpanan.get('bibit2', 0)}\033[0m")
+    print(f" ➥ Kayu T.1(0) = \033[32m{box_penyimpanan.get('kayu', 0)}\033[0m")
+    print(f" ➥ Kayu T.1    = \033[32m{box_penyimpanan.get('kayuT1', 0)}\033[0m")
+    print(f" ➥ Kayu T.2    = \033[32m{box_penyimpanan.get('kayuT2', 0)}\033[0m")
+    print(f" ➥ Koin Gxc    = \033[32m{box_penyimpanan.get('gxc', 0)}\033[0m")
     print(" ")
     back=input(" ⇐ Kembali [x] : ").lower()
     if back == "x":
@@ -676,6 +847,10 @@ def d_rumah():
           ln += "😵"
         else:
           ln += "😍"
+      elif MP_AKTIF and any(
+          p.get('w') == 'Rumah' and p.get('x') == x and p.get('y') == y
+          for p in _pemain_lain):
+        ln += "👤"
           
       elif (x, y) == (coinx, coiny):
         ln += "🪙"
@@ -774,6 +949,10 @@ def d_kebun():
           ln += "😵"
         else:
           ln += "😍"
+      elif MP_AKTIF and any(
+          p.get('w') == 'kebun' and p.get('x') == x and p.get('y') == y
+          for p in _pemain_lain):
+        ln += "👤"
         
       elif (x, y) == (pintux1, pintuy1):
         ln += "🏠"
@@ -856,6 +1035,10 @@ def d_pasar():
           ln += "😵"
         else:
           ln += "😍"
+      elif MP_AKTIF and any(
+          p.get('w') == 'pasar' and p.get('x') == x and p.get('y') == y
+          for p in _pemain_lain):
+        ln += "👤"
           
       elif (x, y) == (bpasarx, bpasary):
         ln += "🟩"
@@ -1337,12 +1520,12 @@ def penyimpanan():
         print(" ")
         print(f" ➧ \033[36mBarang yang disimpan :\033[0m 🎒 = ", tas)
         print(" ")
-        print(f" ➥ Bibit T.1   = \033[32m{box_penyimpanan.get("bibit", 0)}\033[0m")
-        print(f" ➥ Bibit T.2   = \033[32m{box_penyimpanan.get("bibit2", 0)}\033[0m")
-        print(f" ➥ Kayu T.1(0) = \033[32m{box_penyimpanan.get("kayu", 0)}\033[0m")
-        print(f" ➥ Kayu T.1    = \033[32m{box_penyimpanan.get("kayuT1", 0)}\033[0m")
-        print(f" ➥ Kayu T.2    = \033[32m{box_penyimpanan.get("kayuT2", 0)}\033[0m")
-        print(f" ➥ Koin Gxc    = \033[32m{box_penyimpanan.get("gxc", 0)}\033[0m")
+        print(f" ➥ Bibit T.1   = \033[32m{box_penyimpanan.get('bibit', 0)}\033[0m")
+        print(f" ➥ Bibit T.2   = \033[32m{box_penyimpanan.get('bibit2', 0)}\033[0m")
+        print(f" ➥ Kayu T.1(0) = \033[32m{box_penyimpanan.get('kayu', 0)}\033[0m")
+        print(f" ➥ Kayu T.1    = \033[32m{box_penyimpanan.get('kayuT1', 0)}\033[0m")
+        print(f" ➥ Kayu T.2    = \033[32m{box_penyimpanan.get('kayuT2', 0)}\033[0m")
+        print(f" ➥ Koin Gxc    = \033[32m{box_penyimpanan.get('gxc', 0)}\033[0m")
         print(" ")
         print(" ➥ Kembali »(k)")
         print(" ")
@@ -1729,12 +1912,12 @@ def penyimpanan():
             info_kpatasyut1 = (2/3)
             info_kaptasyut2 = (4/6)
             
-            jmlbit = box_penyimpanan.get("bibit", 0)
-            jmlbit2 = box_penyimpanan.get("bibit2", 0)
-            jmlyu = box_penyimpanan.get("kayu", 0)
-            jmlyut1 = box_penyimpanan.get("kayuT1", 0)
-            jmlyut2 = box_penyimpanan.get("kayuT2", 0)
-            jmlgxc = box_penyimpanan.get("gxc", 0)
+            jmlbit = box_penyimpanan.get('bibit', 0)
+            jmlbit2 = box_penyimpanan.get('bibit2', 0)
+            jmlyu = box_penyimpanan.get('kayu', 0)
+            jmlyut1 = box_penyimpanan.get('kayuT1', 0)
+            jmlyut2 = box_penyimpanan.get('kayuT2', 0)
+            jmlgxc = box_penyimpanan.get('gxc', 0)
             if tas < 99:
               if "bibit" in box_penyimpanan or "kayu" in box_penyimpanan or "kayuT1" in box_penyimpanan or "gxc" in box_penyimpanan or "bibit2" in box_penyimpanan or "kayuT2" in box_penyimpanan:
                 print(" ")
@@ -1803,7 +1986,7 @@ def penyimpanan():
                 os.system("clear")
                 
                 info_kaptasbit = 2
-                jmlbit = box_penyimpanan.get("bibit", 0)
+                jmlbit = box_penyimpanan.get('bibit', 0)
                 if tas < 99:
                   if "bibit" in box_penyimpanan:
                     print(" ")
@@ -1839,7 +2022,7 @@ def penyimpanan():
                 os.system("clear")
                 
                 info_kaptasbit2 = 3
-                jmlbit = box_penyimpanan.get("bibit2", 0)
+                jmlbit = box_penyimpanan.get('bibit2', 0)
                 if tas < 99:
                   if "bibit2" in box_penyimpanan:
                     print(" ")
@@ -1875,7 +2058,7 @@ def penyimpanan():
                 os.system("clear")
                 
                 info_kaptasyu = 1
-                jmlyu = box_penyimpanan.get("kayu", 0)
+                jmlyu = box_penyimpanan.get('kayu', 0)
                 if tas < 99:
                   if "kayu" in box_penyimpanan:
                     print(" ")
@@ -1911,7 +2094,7 @@ def penyimpanan():
                 os.system("clear")
                 
                 info_kpatasyut1 = (2/3)
-                jmlyut1 = box_penyimpanan.get("kayuT1", 0)
+                jmlyut1 = box_penyimpanan.get('kayuT1', 0)
                 if tas < 99:
                   if "kayuT1" in box_penyimpanan:
                     print(" ")
@@ -1947,7 +2130,7 @@ def penyimpanan():
                 os.system("clear")
                 
                 info_kaptasyut2 = (4/6)
-                jmlyut2 = box_penyimpanan.get("kayuT2", 0)
+                jmlyut2 = box_penyimpanan.get('kayuT2', 0)
                 if tas < 99:
                   if "kayuT2" in box_penyimpanan:
                     print(" ")
@@ -1982,7 +2165,7 @@ def penyimpanan():
                 
                 os.system("clear")
                 
-                jmlgxc = box_penyimpanan.get("gxc", 0)
+                jmlgxc = box_penyimpanan.get('gxc', 0)
                 if tas < 99:
                   if "gxc" in box_penyimpanan:
                     print(" ")
@@ -2462,7 +2645,32 @@ while True:
       print(" ")
       ldSuk()
       worldpos = "Rumah"
-      print(" ")
+      # ── ONLINE MULTIPLAYER SETUP ────────────────
+      if MP_AKTIF:
+        print(" ")
+        print("╔════════════════════════════════════╗")
+        print("║  ONLINE MULTIPLAYER (via internet)  ║")
+        print("╚════════════════════════════════════╝")
+        print(" Install: pip install paho-mqtt")
+        print(" Kosongi semua → mode offline")
+        print(" ")
+        _nama_input = input(" ➞ Nama pemain kamu  : ").strip()
+        NAMA_PEMAIN = _nama_input if _nama_input else "P1"
+        _room_input = input(" ➞ Kode room (bebas) : ").strip()
+        if _room_input:
+          print(" ")
+          print(" \033[36mMenghubungkan ke internet...\033[0m")
+          if _mp.sambung(_room_input, NAMA_PEMAIN):
+            print(f" \033[32mTerhubung! Halo {NAMA_PEMAIN} 👋\033[0m")
+            print(f" \033[32mRoom: {_room_input}\033[0m")
+          else:
+            print(" \033[31mGagal. Pastikan: pip install paho-mqtt\033[0m")
+            print(" Mode offline.")
+          print(" ")
+        else:
+          print(" Mode offline (single player).")
+          print(" ")
+      # ──────────────────────────────────────────
       print(" ")
       input(" ➥ Masuk ! Enter.")
     else:
@@ -3039,6 +3247,10 @@ while True:
         print(" ")
         wkt()
         toko_bibit()
+
+  # ── SYNC MULTIPLAYER setiap akhir loop ────
+  _sync_mp()
+  # ──────────────────────────────────────────
 
   if Game_end > 100:
     print(" ")
