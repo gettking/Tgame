@@ -255,7 +255,7 @@ kebunx, kebuny = 21, 10
 userx1, usery1 = 1, 0
 pintux1, pintuy1 = 0, 0
 flagx1, flagy1 = 1, 0
-apelx, apely = 16, 2
+apelx, apely = 15, 2
 pohon1= {
   (0, 8), (1, 7), (1, 9), (2, 8), (3, 7),
   (3, 9), (4, 8), (5, 9), (5, 7), (6, 8)
@@ -273,6 +273,12 @@ kolam = {
     (17, 5), (17, 6), (18, 6), (18, 5), (18, 4),
     (18, 3), (18, 2), (18, 7), (19, 7), (19, 6),
     (19, 5), (19, 4), (19, 3), (19, 2)
+}
+pinggir_kolam = {
+    (19, 0), (18, 0), (17, 0), (16, 1),
+    (16, 2), (16, 3), (16, 4), (16, 5),
+    (18, 8), (19, 8), (20, 7), (20, 6),
+    (20, 5), (20, 4), (20, 3), (17, 8)
 }
 kapakx, kapaky = 6, 7
 respawn1 = {}
@@ -968,6 +974,16 @@ def d_kebun():
   print(info)
   
   pos = (userx1, usery1)
+  ob = pinggir_kolam
+  if pos in ob:
+    print(" [\033[32mArea memancing\033[0m] m untuk mulai »")
+  
+  pos = (userx1, usery1)
+  ob = kolam
+  if pos in ob:
+    print(" \033[31mKamu bisa tenggelam !\033[0m")
+  
+  pos = (userx1, usery1)
   ob = (kapakx, kapaky)
   if pos == ob:
     print(" [\033[32mKapak\033[0m] m untuk ambil »")
@@ -1054,6 +1070,8 @@ def d_kebun():
         ln += "➡️"
       elif (x, y) in kolam:
         ln += "🟦"
+      elif (x, y) in pinggir_kolam:
+        ln += "🟧"
       elif (x, y) == (apelx, apely):
         ln += "🍎"
       elif (x, y) in flower2:
@@ -1162,8 +1180,7 @@ def coins():
         print("│x untuk kembali ⇐ │")
         print("└──────────────────┘")
         print(" ")
-        print(" ➥ Masukkan jumlah or Max : ")
-        jswap= _getch()
+        jswap=input(" ➥ Masukkan jumlah or Max : ").lower()
         
         #BACK
         if jswap == "x":
@@ -2944,10 +2961,20 @@ while True:
       info = " \033[33maduhhh 😵\033[0m"
     else:
         info = ""
-      
-      
+     
     if pusing > 0:
       pusing -= 1
+      
+    if (userx1, usery1) in kolam:
+      if Hp > 0:
+        Hp -= 1
+      elif Hp == 0:
+        print(" ")
+        print(" \033[33mKamu tenggelam !\033[0m")
+        print("    \033[31mGame over\033[0m   ")
+        print(" ")
+        break
+        
     
     if cmd == "m":
       pos = (userx1, usery1)
