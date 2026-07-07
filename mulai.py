@@ -9,4 +9,4 @@ print("🌐 \033[33mMemeriksa update...\033[0m")
 print("🔧 \033[32mOptimalisasi map rumah dan isi [73%]\033[0m")
 
 time.sleep(2.5)
-os.system("python Tgame_v1.py")
+os.system("python TgameRev.py")

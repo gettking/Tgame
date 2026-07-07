@@ -1,4 +1,27 @@
 #Install: pip install paho-mqtt
+import sys as _sys
+
+def _getch():
+    """Baca 1 karakter tanpa perlu Enter — Linux/Termux"""
+    try:
+        import tty, termios
+        fd = _sys.stdin.fileno()
+        old = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch = _sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+        if ch == '\x03':          # Ctrl+C
+            raise KeyboardInterrupt
+        if ch == '\x1c':          # Ctrl+\ (SIGQUIT)
+            raise KeyboardInterrupt
+        return ch.lower()
+    except KeyboardInterrupt:
+        raise
+    except Exception:
+        line = input()
+        return (line + " ")[0].lower()
 import types as _types
 _mp_mod = _types.SimpleNamespace()
 
@@ -18,6 +41,7 @@ def _init_mp_module():
         "room": "defaultroom",
         "pemain_lain": {},
         "terhubung": False,
+        "game_over_received": False,
     }
 
     def _topik_saya():
@@ -49,11 +73,14 @@ def _init_mp_module():
                 return
             data = _json.loads(msg.payload.decode("utf-8"))
             with _state["lock"]:
+                if data.get("game_over"):
+                    _state["game_over_received"] = True
                 _state["pemain_lain"][nama_pengirim] = {
                     "n": nama_pengirim,
                     "w": data.get("w", "Rumah"),
                     "x": data.get("x", 0),
                     "y": data.get("y", 0),
+                    "game_end": data.get("game_end", 0),
                     "last": _time.time(),
                 }
         except Exception:
@@ -104,6 +131,8 @@ def _init_mp_module():
                     "w": state_lokal.get("world","Rumah"),
                     "x": state_lokal.get("x",0),
                     "y": state_lokal.get("y",0),
+                    "game_end": state_lokal.get("game_end", 0),
+                    "game_over": state_lokal.get("game_over", False),
                 })
                 _state["client"].publish(_topik_saya(), payload, qos=0, retain=False)
             except Exception:
@@ -114,6 +143,15 @@ def _init_mp_module():
             for n in mati:
                 del _state["pemain_lain"][n]
         return get_others()
+
+    def cek_game_over():
+        with _state["lock"]:
+            return _state["game_over_received"]
+
+    def get_scores():
+        with _state["lock"]:
+            return [{"n": d["n"], "game_end": d.get("game_end", 0)}
+                    for d in _state["pemain_lain"].values()]
 
     def get_others():
         with _state["lock"]:
@@ -132,10 +170,11 @@ def _init_mp_module():
     def nama():
         return _state["nama"]
 
-    return sambung, terhubung, kirim, get_others, putus, nama
+    return sambung, terhubung, kirim, get_others, putus, nama, cek_game_over, get_scores
 
 (_mp_mod.sambung, _mp_mod.terhubung, _mp_mod.kirim,
- _mp_mod.get_others, _mp_mod.putus, _mp_mod.nama) = _init_mp_module()
+ _mp_mod.get_others, _mp_mod.putus, _mp_mod.nama,
+ _mp_mod.cek_game_over, _mp_mod.get_scores) = _init_mp_module()
 del _init_mp_module, _types
 # ── akhir mp_client inline ────────────────────────────────────
 
@@ -336,15 +375,36 @@ def _pos_mp():
     else:
         return worldpos, userxp, useryp
 
-def _sync_mp():
+def _sync_mp(game_over=False):
     global _pemain_lain
     if not MP_AKTIF or not _mp.terhubung():
         return
     try:
         w, x, y = _pos_mp()
-        _pemain_lain = _mp.kirim({"world": w, "x": x, "y": y})
+        _pemain_lain = _mp.kirim({
+            "world": w, "x": x, "y": y,
+            "game_end": Game_end,
+            "game_over": game_over,
+        })
     except Exception:
         pass
+
+def _dashboard():
+    """Tampilkan leaderboard Game_end semua pemain"""
+    if not MP_AKTIF or not _mp.terhubung():
+        return
+    scores = _mp.get_scores()
+    if not scores:
+        return
+    print("┌─────────────────────────┐")
+    print("│  📊 Progress Misi       │")
+    myn = NAMA_PEMAIN[:8]
+    print(f"│  ⭐ {myn:<8}: {Game_end:>3}/100  │")
+    for s in scores:
+        n = s.get("n","?")[:8]
+        ge = s.get("game_end", 0)
+        print(f"│  👤 {n:<8}: {ge:>3}/100  │")
+    print("└─────────────────────────┘")
 # ─────────────────────────────────────────────
 
 def ldtb(delay=0.17):
@@ -2679,8 +2739,9 @@ while True:
   #RUMAH(HOME)
   elif worldpos == "Rumah":
     d_rumah()
-    print(" ")
-    cmd=input(" ➧ perintah : ").lower()
+    _dashboard()
+    print(" [wasd]gerak  [m]aksi  [i]tas  [p]asar  [k]ebun")
+    cmd = _getch()
 
     oldx, oldy = userx, usery
     
@@ -2814,8 +2875,9 @@ while True:
   elif worldpos == "kebun":
     
     d_kebun()
-    print(" ")
-    cmd=input(" ➧ perintah : ").lower()
+    _dashboard()
+    print(" [wasd]gerak  [m]aksi  [i]tas  [0]info lahan")
+    cmd = _getch()
     
     oldx, oldy = userx1, usery1
     
@@ -3179,8 +3241,9 @@ while True:
   else:
     
     d_pasar()
-    print(" ")
-    cmd=input(" ➥ perintah : ").lower()
+    _dashboard()
+    print(" [wasd]gerak  [m]aksi  [i]tas")
+    cmd = _getch()
     
     oldx, oldy = userxp, useryp
     
@@ -3246,7 +3309,27 @@ while True:
   _sync_mp()
   # ──────────────────────────────────────────
 
-  if Game_end == 100:
+  # Cek apakah pemain lain sudah menyelesaikan misi
+  if MP_AKTIF and _mp.terhubung() and _mp.cek_game_over():
+    os.system("clear")
     print(" ")
-    print(" \033[32mOsot bolosot aku hebat !\033[0m")
+    print(" \033[31m╔══════════════════════════════════╗\033[0m")
+    print(" \033[31m║  GAME OVER — Pemain lain menang! ║\033[0m")
+    print(" \033[31m╚══════════════════════════════════╝\033[0m")
+    print(" ")
+    input(" ➥ Enter untuk keluar.")
+    break
+
+  if Game_end == 100:
+    # Broadcast game over ke semua pemain di room
+    _sync_mp(game_over=True)
+    os.system("clear")
+    print(" ")
+    print(" \033[32m╔═══════════════════════════════╗\033[0m")
+    print(" \033[32m║  🏆 KAMU MENANG! Misi selesai! ║\033[0m")
+    print(" \033[32m╚═══════════════════════════════╝\033[0m")
+    print(" ")
+    print(" \033[32mOsot bolosot aku hebat!\033[0m")
+    print(" ")
+    input(" ➥ Enter untuk keluar.")
     break
