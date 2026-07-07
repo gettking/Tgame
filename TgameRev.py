@@ -313,8 +313,12 @@ tanam2 = set()
 respawnT2 = {}
 wt_tanam2 = 30
 
+kapak = 0
 respawnA = {}
 wt_muncul = 40
+
+respawnK = {}
+wt_munculk = 60
 
 ppasarx, ppasary = 20, 9
 
@@ -399,11 +403,11 @@ def _dashboard():
     print("┌─────────────────────────┐")
     print("│  📊 Progress Misi       │")
     myn = NAMA_PEMAIN[:8]
-    print(f"│  ⭐ {myn:<8}: {Game_end:>3}/100  │")
+    print(f"│  💫 {myn:<8}: {Game_end:>3}/100   │")
     for s in scores:
         n = s.get("n","?")[:8]
         ge = s.get("game_end", 0)
-        print(f"│  👤 {n:<8}: {ge:>3}/100  │")
+        print(f"│  💫 {n:<8}: {ge:>3}/100   │")
     print("└─────────────────────────┘")
 # ─────────────────────────────────────────────
 
@@ -578,7 +582,9 @@ def isiTas():
     print(f" ➥ Kayu T.2    = \033[32m{box_penyimpanan.get('kayuT2', 0)}\033[0m")
     print(f" ➥ Koin Gxc    = \033[32m{box_penyimpanan.get('gxc', 0)}\033[0m")
     print(" ")
-    back=input(" ⇐ Kembali [x] : ").lower()
+    print(" ⇐ Kembali [x] : ")
+    back = _getch()
+    
     if back == "x":
       break
  
@@ -619,7 +625,8 @@ def gentongbuang():
     print(" Koin Gxc    - 6")
     print(" Keluar      - ×")
     print(" ")
-    buang= input("\033[31mPilih & masukkan jumlah barang untuk dibuang :\033[0m ").lower()
+    print("\033[31mPilih & masukkan jumlah barang untuk dibuang :\033[0m ")
+    buang=_getch()
     
     if buang == "1":
         
@@ -839,7 +846,7 @@ def d_rumah():
     
   pos= (userx, usery)
   print("┌─────────┐")
-  print(f"│🏠\033[36m Rumah\033[0m │ \033[32m{pos}\033[0m {Game_end}")
+  print(f"│🏠\033[36m Rumah\033[0m │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}")
   print("└─────────┘")
   infopemain()
   print("│----------------------------------------│")
@@ -953,12 +960,17 @@ def d_kebun():
   
   pos = (userx1, usery1)
   print("┌─────────┐")
-  print(f"│🏡\033[33m Kebun\033[0m │ \033[32m{pos}\033[0m {Game_end}")
+  print(f"│🏡\033[33m Kebun\033[0m │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}")
   print("└─────────┘")
   infopemain()
   print("|----------------------------------------|")
   
   print(info)
+  
+  pos = (userx1, usery1)
+  ob = (kapakx, kapaky)
+  if pos == ob:
+    print(" [\033[32mKapak\033[0m] m untuk ambil »")
   
   pos = (userx1, usery1)
   ob = (apelx, apely)
@@ -1055,7 +1067,7 @@ def d_pasar():
   
   pos = (userxp, useryp)
   print("┌─────────┐")
-  print(f"│🛍\033[33m Pasar\033[0m  │ \033[32m{pos}\033[0m {Game_end}")
+  print(f"│🛍\033[33m Pasar\033[0m  │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}")
   print("└─────────┘")
   infopemain()
   print("|----------------------------------------|")
@@ -1125,8 +1137,8 @@ def coins():
     print(" n =\033[31m Exit\033[0m ⇐")
     print("▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️ ▫️")
     print(" ")
-    
-    cmd=input(" ➥ Swap G-coin ke Gxc [y or n]: ")
+    print(" ➥ Swap G-coin ke Gxc [y or n]: ")
+    cmd= _getch()
     
     if cmd == "y":
   
@@ -1150,7 +1162,8 @@ def coins():
         print("│x untuk kembali ⇐ │")
         print("└──────────────────┘")
         print(" ")
-        jswap=(input(" ➥ Masukkan jumlah or Max : "))
+        print(" ➥ Masukkan jumlah or Max : ")
+        jswap= _getch()
         
         #BACK
         if jswap == "x":
@@ -1258,8 +1271,8 @@ def toko_bibit():
     print(" ")
     print(" Tersedia:\n(1) Bibit pohon T.1\n(2) Bibit pohon T.2\n(x) Keluar")
     print(" ")
-  
-    cmd=input(" ➥ Pilih : ").lower()
+    print(" ➥ Pilih : ")
+    cmd = _getch()
   
     if cmd == "1":
       print(" ")
@@ -1274,7 +1287,8 @@ def toko_bibit():
         print(" Beli 1 (1)\n Beli 3 (3)\n Beli 5 (5)")
         print(" ")
         print(" Kembali [x]")
-        ubeli=input(" Input kode sesuai pilihan : ").lower()
+        print(" Input kode sesuai pilihan : ")
+        ubeli=_getch()
       
         if ubeli == "1":
           if gxc >= t1_1:
@@ -1402,7 +1416,8 @@ def toko_bibit():
         print(" Beli 1 (1)\n Beli 3 (3)\n Beli 5 (5)")
         print(" ")
         print(" Kembali [x]")
-        ubeli=input(" Input kode sesuai pilihan : ").lower()
+        print(" Input kode sesuai pilihan : ")
+        ubeli=_getch()
         
         if ubeli == "1":
           if lvl >= 2:
@@ -1564,7 +1579,8 @@ def penyimpanan():
     print(" ➥  \033[33mBuang barang         »\033[0m(3)")
     print(" ➥  exit                 »(x)")
     print(" ")
-    cmd=input(" Pilih : ").lower()
+    print(" Pilih : ")
+    cmd=_getch()
     
     if cmd == "0":
       
@@ -1583,7 +1599,8 @@ def penyimpanan():
         print(" ")
         print(" ➥ Kembali »(k)")
         print(" ")
-        pilih = input(" pilih : ").lower()
+        print(" pilih : ")
+        pilih=_getch()
         
         if pilih == "k":
           break
@@ -1608,7 +1625,8 @@ def penyimpanan():
         print(" ➥ \033[36mPilih beberapa barang »\033[0m(2)")
         print(" ➥ Kembali               »(x)")
         print(" ")
-        simpan=input(" Pilih : ").lower()
+        print(" Pilih : ")
+        simpan= _getch()
         
         if simpan == "1":
             
@@ -1703,7 +1721,8 @@ def penyimpanan():
             print(" ➥ \033[36mKoin Gxc    »\033[0m(6)")
             print(" ➥ Kembali  »(x)")
             print(" ")
-            psimpan=input(" ➥ Pilih :  ").lower()
+            print(" ➥ Pilih :  ")
+            psimpan=_getch()
             
             if psimpan == "1":
               
@@ -1952,7 +1971,8 @@ def penyimpanan():
         print(" ➥ \033[36mPilih beberapa barang »\033[0m(2)")
         print(" ➥ kembali               »(3)")
         print(" ")
-        abarang=input(" Pilih : ").lower()
+        print(" Pilih : ")
+        abarang=_getch()
         
         if abarang == "1":
           
@@ -2030,7 +2050,8 @@ def penyimpanan():
             print(" ➥ Koin Gxc    »(6)")
             print(" ➥ Kembali     »(x)")
             print(" ")
-            pabarang=input(" Pilih : ").lower()
+            print(" Pilih : ")
+            pabarang=_getch()
             
             if pabarang == "1":
               print(" ")
@@ -2279,7 +2300,8 @@ def penyimpanan():
         print(" ➥ Pilih beberapa barang »(2)")
         print(" ➥ Kembali               »(3)")
         print(" ")
-        buang=input(" ➥ Pilih : ").lower()
+        print(" ➥ Pilih : ")
+        buang= _getch()
         
         if buang == "1":
           if box_penyimpanan:
@@ -2319,7 +2341,8 @@ def penyimpanan():
             print(" ➥ Koin Gxc    »(6)")
             print(" ➥ Kembali     »[x]")
             print(" ")
-            pbuang=input(" ➥ Pilih : ").lower()
+            print(" ➥ Pilih : ")
+            pbuang=_getch()
             
             if pbuang == "1":
               if "bibit" in box_penyimpanan:
@@ -2475,7 +2498,8 @@ def infolahan():
     print(" Huruf \033[32mq\033[0m untuk menanam.")
     print(" Huruf \033[32mc\033[0m untuk menebang.")
     print(" ")
-    cmd=input(" Keluar [x] :").lower()
+    print(" Keluar [x] :")
+    cmd = _getch()
     
     if cmd == "x":
       break
@@ -2495,7 +2519,8 @@ def kerajinan():
     print(" ➥ Buat lemari »(4)")
     print(" ➥ Keluar      »[x]")
     print(" ")
-    cmd=input(" Pilih : ").lower()
+    print(" Pilih : ")
+    cmd=_getch()
     
     if cmd == "1":
       
@@ -2516,7 +2541,8 @@ def kerajinan():
         print(" ")
         print(" ➥ Kembali           »[x]")
         print(" ")
-        papan=input(" Pilih : ").lower()
+        print(" Pilih : ")
+        papan=_getch()
         
         if papan == "1":
           if kayu >= 2:
@@ -2628,11 +2654,19 @@ def misi():
     print(f"» Kayu  T.1      ×100 [\033[32m{kayu1cek}\033[0m]")
     print(f"» Kayu  T.2      ×125 [\033[32m{kayu2cek}\033[0m]")
     print(" ")
-    cmd=input(" Keluar [x] : ").lower()
+    print(" Keluar [x] : ")
+    cmd=_getch()
+    
     if cmd == "x":
       break
 
 while True:
+    
+  nowK = time.time()
+  for posK in list(respawnK.keys()):
+    if nowK >= respawnK[posK]:
+      kapakx, kapaky = posK
+      del respawnK[posK]
   
   nowA = time.time()
   for posA in list(respawnA.keys()):
@@ -2703,10 +2737,10 @@ while True:
       if MP_AKTIF:
         print(" ")
         print("╔════════════════════════════════════╗")
-        print("║  ONLINE MULTIPLAYER (via internet)  ║")
+        print("║  ONLINE MULTIPLAYER (via internet) ║")
         print("╚════════════════════════════════════╝")
         print(" Install: pip install paho-mqtt")
-        print(" Kosongi semua → mode offline")
+        print(" Kosongi semua untuk mode offline")
         print(" ")
         _nama_input = input(" ➞ Nama pemain kamu  : ").strip()
         NAMA_PEMAIN = _nama_input if _nama_input else "P1"
@@ -2857,7 +2891,7 @@ while True:
             ldcas()
             print(" ")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.567)
             Hp = 100
             
             if casx is not None and (userx, usery) == (casx, casy):
@@ -2927,7 +2961,22 @@ while True:
           Hp += random.randint(20, 50)
           respawnA[apelx, apely] = nowA + wt_muncul
           apelx, apely = -1, -1
-  
+    
+    if cmd == "m":
+      pos = (userx1, usery1)
+      obj = (kapakx, kapaky)
+      if kapak < 2:
+        if pos == obj:
+          print(" ")
+          print(" Mengambil kapak »")
+          print(" ")
+          kapak += 20
+          time.sleep(0.36)
+          respawnK[kapakx, kapaky] = nowK + wt_munculk
+          kapakx, kapaky = -1, -1
+        
+      
+    
     #PART_menanam pohon t.1
     if cmd == "p":
       pos = (userx1, usery1)
@@ -2941,13 +2990,13 @@ while True:
           print(" ")
           print(" \033[33mSudah ada tanaman !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
+          time.sleep(0.234)
           
         elif pos in tm2 or pos in pt2:
           print(" ")
           print(" \033[31mSudah ada pohon T.2 yang ditanam disini !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
+          time.sleep(0.3)
       
         elif Hp >= 2:
           if bibit >= 1:
@@ -2963,23 +3012,18 @@ while True:
             tanam.add((userx1, usery1))
             print(" \033[32mSukses menanam bibit T.1 ✓\033[0m")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
             respawnT[userx1, usery1] = nowT + wt_tanam
           else:
             print(" ")
             print(" \033[31mBibit T.1 tidak ada!!!\033[0m")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
         else:
           print(" ")
           print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
-          input(" ➥ Enter.")
-      else:
-        print(" ")
-        print(" \033[31mHanya bisa dilahan menanam!\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
+          time.sleep(0.3)
     
     #PART_menebang_pohon_t.1
     if cmd == "x":
@@ -2991,48 +3035,49 @@ while True:
         print(" ")
         print(" \033[33mPohon masih muda !\033[0m")
         print(" ")
-        input(" ➥ Enter.")
+        time.sleep(0.3)
         
       elif pos in pt:
-        if Hp >= 2:
-          if tas < 100:
-            print(" ")
-            print(" ➥ Mulai menebang.")
-            print(" ")
-            time.sleep(1.5)
-            print(" ")
-            kayuT1 += 3
-            tas += 2
-            exp += 5
-            Hp -= 2
-            pohon_tanam.remove(pos)
-            gxc += 19
-            gxc = round(gxc, 3)
-            print(" \033[32mMenebang sukses ✓\033[0m")
-            print(" ")
-            input(" ➥ Enter.")
+        if kapak >= 2:
+          if Hp >= 2:
+            if tas < 100:
+              print(" ")
+              print(" ➥ Mulai menebang.")
+              print(" ")
+              time.sleep(1.5)
+              print(" ")
+              kapak -= 2
+              kayuT1 += 3
+              tas += 2
+              exp += 5
+              Hp -= 2
+              pohon_tanam.remove(pos)
+              gxc += 19
+              gxc = round(gxc, 3)
+              print(" \033[32mMenebang sukses ✓\033[0m")
+              print(" ")
+              time.sleep(0.3)
+            else:
+              print(" ")
+              print(" \033[31mTas kamu penuh !\033[0m")
+              print(" ")
+              time.sleep(0.3)
           else:
             print(" ")
-            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
+          print(" \033[31mDimana kapak mu !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
+          time.sleep(0.3)
       
       elif pos in lhn:
         print(" ")
         print(" \033[33mTidak ada objek tanaman !\033[0m")
         print(" ")
-        input(" ➥ Enter.")
-          
-      else:
-        print(" ")
-        print(" \033[31mBukan diarea lahan !\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
+        time.sleep(0.3)
     
     #part menanam pohon T.2
     if cmd == "q":
@@ -3047,13 +3092,13 @@ while True:
           print(" ")
           print(" \033[33mSudah ada tanaman !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
+          time.sleep(0.3)
         
         elif pos in tm1 or pos in pt1:
           print(" ")
           print(" \033[31mSudah ada pohon T.1 yang ditanam disini !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
+          time.sleep(0.3)
         
         elif Hp >= 4:
           if bibit2 >= 1:
@@ -3069,23 +3114,18 @@ while True:
             tanam2.add((userx1, usery1))
             print(" \033[32mSukses menanam bibit T.2 ✓\033[0m")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
             respawnT2[userx1, usery1] = nowT2 + wt_tanam2
           else:
             print(" ")
             print(" \033[31mBibit T.2 tidak ada!!!\033[0m")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
         else:
           print(" ")
           print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
           print(" ")
-          input(" ➥ Enter.")
-      else:
-        print(" ")
-        print(" \033[31mHanya bisa dilahan menanam!\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
+          time.sleep(0.3)
     
     #part menebanh pohon T.2
     if cmd == "c":
@@ -3097,51 +3137,50 @@ while True:
         print(" ")
         print(" \033[33mPohon masih muda !\033[0m")
         print(" ")
-        input(" ➥ Enter.")
+        time.sleep(0.3)
         
       elif pos in pt:
-        if Hp >= 4:
-          if tas < 100:
-            print(" ")
-            print(" ➥ Mulai menebang.")
-            print(" ")
-            time.sleep(1.5)
-            print(" ")
-            kayuT2 += 6
-            tas += 4
-            exp += 6
-            Hp -= 4
-            pohon_tanam2.remove(pos)
-            gxc += 25
-            gxc = round(gxc, 3)
-            print(" \033[32mMenebang sukses ✓\033[0m")
-            print(" ")
-            input(" ➥ Enter.")
+        if kapak >= 2:
+          if Hp >= 4:
+            if tas < 100:
+              print(" ")
+              print(" ➥ Mulai menebang.")
+              print(" ")
+              time.sleep(1.5)
+              print(" ")
+              kapak -= 2
+              kayuT2 += 6
+              tas += 4
+              exp += 6
+              Hp -= 4
+              pohon_tanam2.remove(pos)
+              gxc += 25
+              gxc = round(gxc, 3)
+              print(" \033[32mMenebang sukses ✓\033[0m")
+              print(" ")
+              time.sleep(0.3)
+            else:
+              print(" ")
+              print(" \033[31mTas kamu penuh !\033[0m")
+              print(" ")
+              time.sleep(0.3)
           else:
             print(" ")
-            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
+          print(" \033[31mDimana kapak mu !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
-      
+          time.sleep(0.3)
+          
       elif pos in lhn:
         print(" ")
         print(" \033[33mTidak ada objek tanaman !\033[0m")
         print(" ")
-        input(" ➥ Enter.")
+        time.sleep(0.3)
           
-      else:
-        print(" ")
-        print(" \033[31mBukan diarea lahan !\033[0m")
-        print(" ")
-        input(" ➥ Enter.")     
-        
-        
-        
     
     #PART_kembali kerumah
     if cmd == "m":
@@ -3170,72 +3209,76 @@ while True:
       pos = (userx1, usery1)
       obj = pohon1
       if pos in obj:
-        if Hp >= 3:
-          if tas < 100:
-            print(" ")
-            print(" ➥ Mulai menebang...")
-            print(" ")
-            kayu += 1
-            Hp -= 3
-            gcoins += 7
-            gcoins = round(gcoins, 3)
-            pohon1.remove((userx1, usery1))
-            respawn1[userx1, usery1] = now1 + w_tumbuh1
-            ldtb()
-            tas += 1
-            exp += 2
-            time.sleep(0.12)
+        if kapak >= 1:
+          if Hp >= 3:
+            if tas < 100:
+              print(" ")
+              print(" ➥ Mulai menebang...")
+              print(" ")
+              kapak -= 1
+              kayu += 1
+              Hp -= 3
+              gcoins += 7
+              gcoins = round(gcoins, 3)
+              pohon1.remove((userx1, usery1))
+              respawn1[userx1, usery1] = now1 + w_tumbuh1
+              ldtb()
+              tas += 1
+              exp += 2
+              time.sleep(0.12)
+            else:
+              print(" ")
+              print(" \033[31mTas kamu penuh !\033[0m")
+              print(" ")
+              time.sleep(0.3)
           else:
             print(" ")
-            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
             print(" ")
-            input(" ➥ Enter.")
+            time.sleep(0.3)
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
+          print(" \033[31mDimana kapak mu !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
-      else:
-        print(" ")
-        print(" \033[33mTunggu pohon tumbuh!\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
-    
-  
+          time.sleep(0.3)
       
     #PART_menebang pohon t.2(0) 
     if cmd == "2":
       pos = (userx1, usery1)
       obj = pohon2
       if pos in obj:
-        if Hp >= 3:
-          if tas < 100:
-            print(" ")
-            print(" ➥ Mulai menebang...")
-            print(" ")
-            kayu += 1
-            Hp -= 3
-            gcoins += 7
-            gcoins = round(gcoins, 3)
-            pohon2.remove((userx1, usery1))
-            respawn2[userx1, usery1] = now2 + w_tumbuh2
-            ldtb()
-            tas += 1
-            exp += 2
-            time.sleep(0.12)
+        if kapak >= 1:
+          if Hp >= 3:
+            if tas < 100:
+              print(" ")
+              print(" ➥ Mulai menebang...")
+              print(" ")
+              kapak -= 1
+              kayu += 1
+              Hp -= 3
+              gcoins += 7
+              gcoins = round(gcoins, 3)
+              pohon2.remove((userx1, usery1))
+              respawn2[userx1, usery1] = now2 + w_tumbuh2
+              ldtb()
+              tas += 1
+              exp += 2
+              time.sleep(0.12)
+            else:
+              print(" ")
+              print(" \033[31mTas kamu penuh !\033[0m")
+              time.sleep(0.3)
           else:
             print(" ")
-            print(" \033[31mTas kamu penuh !\033[0m")
+            print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
+            print(" ")
+            time.sleep(0.3)
         else:
           print(" ")
-          print(" \033[31mIsi Energi\033[0m» ♥️  = 🍚 «")
+          print(" \033[31mDimana kapak mu !\033[0m")
           print(" ")
-          input(" ➥ Enter.")
-      else:
-        print(" ")
-        print(" \033[33mTunggu pohon tumbuh!\033[0m")
-        print(" ")
-        input(" ➥ Enter.")
+          time.sleep(0.3)
+      
         
   #PASAR
   else:
