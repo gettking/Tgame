@@ -355,11 +355,58 @@ ppasarx, ppasary = 20, 9
 #map_pasar
 pasarx, pasary = 21, 10
 userxp, useryp = 1, 0
+Tk = {
+    (15, 8)
+}
+tik1 = {
+    (17, 6)
+}
+tik2 = {
+    (18, 6)
+}
+tip1 = {
+    (15, 6)
+}
+tip2 = {
+    (16, 6)
+}
+figurikan = {
+    (15, 7), (16, 7), (17, 7), (18, 7)
+}
+pancuranikan = {
+    (16, 8), (17, 8), (18, 8)
+}
+karpetpasar = {
+    (8, 4), (15, 4), (8, 9), (15, 9)
+}
 Tokbit = {
-  (2, 2), (3, 2),
-  (2, 3), (3, 3)
+  (15, 3)
+}
+ataptokbit = {
+    (17, 1), (18, 1)
+}
+depantokbit={
+    (16, 3), (17, 3), (18, 3)
+}
+jendela_tokbit = {
+    (15, 2)
 }
 
+tp = {
+    (15, 1)
+}
+kp = {
+    (16, 1)
+}
+b1p = {
+    (16, 2)
+}
+b2p = {
+    (17, 2)
+}
+b3p = {
+    (18, 2)
+}
 bpasarx, bpasary = 0, 0
 
 #data_user
@@ -392,10 +439,14 @@ wallsk = {
 
 #walls_pasar
 wallp = {
-  (2, 1), (3, 1),
-  (1, 2), (1, 3),
-  (3, 4), (4, 3),
-  (4, 2)
+  (19, 3), (19, 2), (19, 1), (15, 0), (16, 0),
+  (17, 0), (18, 0), (14, 1), (14, 2), (14, 3),
+  (14, 6), (14, 7), (14, 8), (15, 5), (16, 5),
+  (17, 5), (18, 5), (19, 6), (19, 7), (19, 8),
+  (12, 3), (12, 2), (12, 1), (8, 0), (9, 0),
+  (10, 0), (11, 0), (7, 1), (7, 2), (7, 3),
+  (7, 8), (7, 7), (7, 6), (8, 5), (9, 5), (10, 5),
+  (11, 5), (12, 6), (12, 7), (12, 8)
 }
 
 worldpos = "start"
@@ -575,9 +626,8 @@ wkt()
 
 #dashboard
 def infopemain():
-  pos = (cacingx, cacingy)
   print("┌───────────────────────────────┐")
-  print(f"│🍚: {Hp:<5} 🎒: {tas:<5} 🅶: {gxc:<8}│ 🪱 : {cacing} \033[33m{pos}\033[0m")
+  print(f"│🍚: {Hp:<5} 🎒: {tas:<5} 🅶: {gxc:<8}│")
   print("└───────────────────────────────┘")
   print(f" ➥ \033[36mBuka tas & peyimpanan [i]\033[0m Exp : \033[32m{exp}\033[0m")
 
@@ -888,8 +938,9 @@ def d_rumah():
     
   pos= (userx, usery)
   print("┌─────────┐")
-  print(f"│🏠\033[36m Rumah\033[0m │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
+  print(f"│🏠\033[36m Rumah\033[0m │ ")
   print("└─────────┘")
+  print(f" ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
   infopemain()
   print("│----------------------------------------│")
   
@@ -937,7 +988,8 @@ def d_rumah():
     print(" [\033[33mEnergi\033[0m] m untuk eumam »")
   
   print("│----------------------------------------│")
-  print(" \033[36mHasil Memancing\033[0m » h untuk melihat")
+  pos = (cacingx, cacingy)
+  print(f" ➥ \033[36mHasil Memancing\033[0m [h] 🪱 : {cacing} \033[33m{pos}\033[0m")
   print(" ")
   
   for y in range(rumahy):
@@ -1003,8 +1055,9 @@ def d_kebun():
   
   pos = (userx1, usery1)
   print("┌─────────┐")
-  print(f"│🏡\033[33m Kebun\033[0m │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
+  print(f"│🏡\033[33m Kebun\033[0m │ ")
   print("└─────────┘")
+  print(f" ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
   infopemain()
   print("|----------------------------------------|")
   
@@ -1067,7 +1120,8 @@ def d_kebun():
   
   
   print("|----------------------------------------|")
-  print(" \033[36mHasil Memancing\033[0m » h untuk melihat")
+  pos = (cacingx, cacingy)
+  print(f" ➥ \033[36mHasil Memancing\033[0m [h] 🪱 : {cacing} \033[33m{pos}\033[0m")
   print(" ")
   
   for y in range(kebuny):
@@ -1139,12 +1193,18 @@ def d_pasar():
   
   pos = (userxp, useryp)
   print("┌─────────┐")
-  print(f"│🛍\033[33m Pasar\033[0m  │ ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
+  print(f"│🛍\033[33m Pasar\033[0m  │ ")
   print("└─────────┘")
+  print(f" ✛ : \033[32m{pos}\033[0m   𝐆𝐄 : {Game_end}   🪓 : {kapak}   🎣 : {pancingan}")
   infopemain()
   print("|----------------------------------------|")
   
   print(info)
+  
+  pos = (userxp, useryp)
+  ob = Tk
+  if pos in ob:
+    print(" [\033[32mToko Jual/beli ikan\033[0m] m untuk masuk »")
   
   pos = (userxp, useryp)
   ob = wallp
@@ -1162,7 +1222,8 @@ def d_pasar():
     print(" [\033[32mToko Bibit\033[0m] m untuk masuk »")
     
   print("|----------------------------------------|")
-  print(" \033[36mHasil Memancing\033[0m » h untuk melihat")
+  pos = (cacingx , cacingy)
+  print(f" ➥ \033[36mHasil Memancing\033[0m [h] 🪱 : {cacing} \033[33m{pos}\033[0m")
   print(" ")
   
   for y in range(pasary):
@@ -1180,13 +1241,45 @@ def d_pasar():
         ln += "🥰"
           
       elif (x, y) == (bpasarx, bpasary):
-        ln += "🟩"
+        ln += "🏡"
       elif (x, y) in Tokbit:
         ln += "🍀"
       elif (x, y) in wallp:
         ln += "🧱"
+      elif (x, y) in tp:
+        ln += "🆃🅾"
+      elif (x, y) in kp:
+        ln += "🅺🅾"
+      elif (x, y) in b1p:
+        ln += "🅱🅸"
+      elif (x, y) in b2p:
+        ln += "🅱🅸"
+      elif (x, y) in b3p:
+        ln += "🆃!"
+      elif (x, y) in jendela_tokbit:
+        ln += "🪟"
+      elif (x, y) in depantokbit:
+        ln += "🎍"
+      elif (x, y) in ataptokbit:
+        ln += "💈"
+      elif (x, y) in karpetpasar:
+        ln += "🔳"
+      elif (x, y) in tip1:
+        ln += "\033[32m🆃🅾\033[0m"
+      elif (x, y) in tip2:
+        ln += "\033[32m🅺🅾\033[0m"
+      elif (x, y) in figurikan:
+        ln += "🐟"
+      elif (x, y) in pancuranikan:
+        ln += "⛲"
+      elif (x, y) in tik1:
+        ln += "\033[34m🅸🅺\033[0m"
+      elif (x, y) in tik2:
+        ln += "\033[34m🅰🅽\033[0m"
+      elif (x, y) in Tk:
+        ln += "🎏"
       else:
-        ln += "⬜"
+        ln += "🟩"
         
     print(ln)
 
@@ -2822,9 +2915,9 @@ def memancing():
       ikan[jenis] += 1
       time.sleep(2.345)
       print(" ")
-      print(f" \033[32mSukses! +1 {jenis}")
+      print(f" \033[32mSukses! +1\033[0m {jenis}")
       print(" ")
-      input(" ➥ Enter.")
+      time.sleep(1.234)
     else:
       print(" ")
       print(" \033[31mCari cacing !\033[0m")
@@ -3031,7 +3124,7 @@ while True:
   elif worldpos == "Rumah":
     d_rumah()
     _dashboard()
-    print(" [wasd]gerak  [m]aksi  [i]tas  [p]asar  [k]ebun")
+    
     cmd = _getch()
 
     oldx, oldy = userx, usery
@@ -3170,7 +3263,7 @@ while True:
     
     d_kebun()
     _dashboard()
-    print(" [wasd]gerak  [m]aksi  [i]tas  [0]info lahan")
+    
     cmd = _getch()
     
     oldx, oldy = userx1, usery1
@@ -3252,18 +3345,18 @@ while True:
       pos = (userx1, usery1)
       obj = (pancingx, pancingy)
       if pos == obj:
-        if pancingan == 0:
+        if pancingan <= 0:
           print(" ")
           print(" Mengambil pancingan »")
-          pancingan += 1
+          pancingan += 50
           time.sleep(0.345)
         
     if cmd == "m":
       pos = (userx1, usery1)
       obj = (cacingx, cacingy)
       if pos == obj:
-        if cacing <= 1:
-          cacing += 2
+        if cacing <= 0:
+          cacing += 10
           cacingx, cacingy = random.randint(0, kebunx -1), random.randint(0, kebuny -1)
     if cmd == "m":
       pos = (userx1, usery1)
@@ -3581,7 +3674,7 @@ while True:
     
     d_pasar()
     _dashboard()
-    print(" [wasd]gerak  [m]aksi  [i]tas")
+    
     cmd = _getch()
     
     oldx, oldy = userxp, useryp
@@ -3610,7 +3703,19 @@ while True:
       useryp = 0
     elif useryp >= pasary:
       useryp = pasary -1
-     
+      
+    pos = (userxp, useryp)
+    obj1 = jendela_tokbit
+    obj2 = depantokbit
+    if pos in obj1 or pos in obj2:
+      userxp, useryp = oldx, oldy
+    
+    pos = (userxp, useryp)
+    obj1 = figurikan
+    obj2 = pancuranikan
+    if pos in obj1 or pos in obj2:
+      userxp, useryp = oldx, oldy
+        
     pos = (userxp, useryp)
     obj = wallp
     if pos in obj:
