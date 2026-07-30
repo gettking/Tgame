@@ -80,7 +80,7 @@ TOPIC_PREFIX = "termuxchat"
 KEEPALIVE    = 60
 
 # ─────────────────────────────────────────────────────
-#  GLOBAL STATE
+	#  GLOBAL STATE
 # ─────────────────────────────────────────────────────
 state = {
     "username":    "",
@@ -134,7 +134,7 @@ def print_border():
     print(f"{C.BORDER}{'─'*52}{C.RESET}")
 
 # ─────────────────────────────────────────────────────
-#  MQTT PUBLISH HELPERS
+#  Help
 # ─────────────────────────────────────────────────────
 def _topic() -> str:
     return f"{TOPIC_PREFIX}/{state['channel']}"
