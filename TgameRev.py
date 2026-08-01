@@ -433,7 +433,7 @@ pedang = {
     "pedang1": 0,
     "x1": 17,
     "y1": 6,
-    "damage1": 1000,
+    "damage1": random.randint(15, 35),
     "hp1": 25,
     "reloadhp": 25,
     "status1": False
@@ -442,52 +442,62 @@ pedang = {
 monster = {
     #kerajaanHitam
     "semut_hitam": {
-        "damage": 6,
+        "damage": random.choices([6, 5, 4, 10], weights = [50, 30, 10, 10], k = 1)[0],
         "hp": 50,
         "x": 15,
         "y": 4,
         "status": False,
-        "reward_kunci1": 1
+        "plester": 3,
+        "reward_kunci1": 1,
+        "exp": 50
         
     },
     "nyamuk_hitam" : {
-        "damage": 8,
+        "damage": random.choices([8, 7, 6, 12], weights = [50, 30, 10, 10], k = 1)[0],
         "hp": 100,
-        "x": 13,
-        "y": 10,
+        "x": 0,
+        "y": 17,
         "status": False,
-        "reward_kunci1": 1
+        "plester": 3,
+        "reward_kunci1": 1,
+        "exp": 50
     },
     "laba2_hitam": {
-        "damage": 20,
+        "damage": random.choices([20, 19, 18, 24], weights = [50, 30, 10, 10], k = 1)[0],
         "hp": 200,
         "x": 19,
         "y": 21,
         "status": False,
-        "reward_kunci1": 1
+        "plester": 3,
+        "reward_kunci1": 1,
+        "exp": 50
     },
     "lalat_anomali": {
-        "damage": 40,
+        "damage": random.choices([40, 39, 38, 44], weights = [50, 30, 10, 10], k = 1)[0],
         "hp": 400,
         "x": 8,
         "y": 23,
         "status": False,
-        "reward_kunci1": 1
+        "plester": 5,
+        "reward_kunci1": 1,
+        "exp": 50
     },
     #BOSS kerajaan hitam
     "2face": {
-        "damage": random.randint(55, 75),
+        "damage": random.choices([70, 69, 68, 74], weights = [50, 30, 10, 10], k = 1)[0],
         "hp": 999,
         "x": 10,
         "y": 14,
         "status": False,
-        #reward
+        "plester": 10,
         "reward_pil1": 1,
-        "exp": 1500
+        "exp": 200
     }
 }
 
 rw_rbt = {
+    "plester": 0,
+    
     "kunci1": 0,
     "pil1": 0
 }
@@ -495,7 +505,13 @@ rw_rbt = {
 wl_rbt = {
     (11, 14)
 }
-
+pa = {
+    
+    "semut_hitam": (13, 11),
+    "nyamuk_hitam": (14, 15),
+    "laba2_hitam": (14, 18)
+    
+}
 kunci_rbt = {
     
     "kunci1": {
@@ -9589,7 +9605,7 @@ def d_rbt():
   ob1 = pedang
   ob2 = monster
   pos = ob["userx1"], ob["usery1"]
-  print(f"◎\033[32m{pos}\033[0m | 🗡️[p] : \033[36m{pedang["pedang1"]}\033[0m | Hp : {Hp} | Info monster[i]")
+  print(f"◎\033[32m{pos}\033[0m | 🗡 : \033[36m{pedang["pedang1"]}\033[0m | Hp : {Hp} | [i] [p]")
   
   for y in range(ob["ruangy1"]):
     ln = ""
@@ -9602,43 +9618,83 @@ def d_rbt():
         ln += "🪜"
       elif kor == (pedang["x1"], pedang["y1"]):
         if pedang["status1"] == True:
-          ln += "⬛"
+          ln += "[:"
         else:
-          ln += "›🗡️"
+          ln += "[🗡️"
       elif kor == (ob2["semut_hitam"]["x"], ob2["semut_hitam"]["y"]):
         if ob2["semut_hitam"]["status"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🐜"
       elif kor == (ob2["nyamuk_hitam"]["x"], ob2["nyamuk_hitam"]["y"]):
         if ob2["nyamuk_hitam"]["status"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🦟"
       elif kor == (ob2["laba2_hitam"]["x"], ob2["laba2_hitam"]["y"]):
         if ob2["laba2_hitam"]["status"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🕷️🕸️"
       elif kor == (ob2["lalat_anomali"]["x"], ob2["lalat_anomali"]["y"]):
         if ob2["lalat_anomali"]["status"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🪰"
       elif kor == (kunci_rbt["kunci1"]["x"], kunci_rbt["kunci1"]["y"]):
         if kunci_rbt["status1"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🔒"
       elif kor == (ob2["2face"]["x"], ob2["2face"]["y"]):
         if ob2["2face"]["status"] == True:
-          ln += "⬛"
+          ln += "::"
         else:
           ln += "🎭"
+      elif kor == (pa["semut_hitam"][0], pa["semut_hitam"][1]):
+        if pos == (13, 10):
+          if ob2["semut_hitam"]["status"] == False:
+            ln += "!!"
+          else:
+            ln += "::"
+        else:
+          ln += "::"
+      elif kor == (pa["nyamuk_hitam"][0], pa["nyamuk_hitam"][1]):
+        if pos == (13, 15):
+          if ob2["nyamuk_hitam"]["status"] == False:
+            ln += "!!"
+          else:
+            ln += "::"
+        else:
+          ln += "::"
+      elif kor == (pa["laba2_hitam"][0], pa["laba2_hitam"][1]):
+        if pos == (14, 17):
+          if ob2["laba2_hitam"]["status"] == False:
+            ln += "!!"
+          else:
+            ln += "::"
+        else:
+          ln += "::"
       elif kor in batas_rbt:
-        ln += "\033[31m::\033[0m"
+        if pos == (13, 10):
+          if ob2["semut_hitam"]["status"] == False:
+            ln += "🐜"
+          else:
+            ln += "  "
+        elif pos == (13, 15):
+          if ob2["nyamuk_hitam"]["status"] == False:
+            ln += "🦟"
+          else:
+            ln += "  "
+        elif pos == (14, 17):
+          if ob2["laba2_hitam"]["status"] == False:
+            ln += "🕷️🕸️"
+          else:
+            ln += "  "
+        else:
+          ln += "  "
       else:
-        ln += "⬛"
+        ln += "::"
         
     print(ln)
 
@@ -9669,7 +9725,10 @@ def info_pedang():
         print(" ")
         print(" \033[32mItem yang didapat :\033[0m")
         print(" ")
+        print(f" ➥ 🩹 : \033[32m{rw_rbt["plester"]}\033[0m")
+        print(f" ")
         print(f" ➥  🗝️ : \033[32m{rw_rbt["kunci1"]}\033[0m")
+        print(" ")
         print(f" ➥ 💊 : \033[32m{rw_rbt["pil1"]}\033[0m")
         print(" ")
         print(" Kembali »[x]")
@@ -9690,16 +9749,12 @@ def info_musuh1():
     os.system("clear")
     if ob1["semut_hitam"]["status"] == True:
       e1 = "\033[32mDikalahkan ✓\033[0m"
-    
     if ob1["nyamuk_hitam"]["status"] == True:
       e2 = "\033[32mDikalahkan ✓\033[0m"
-    
     if ob1["laba2_hitam"]["status"] == True:
       e3 = "\033[32mDikalahkan ✓\033[0m"
-    
     if ob1["lalat_anomali"]["status"] == True:
       e4 = "\033[32mDikalahkan ✓\033[0m"
-    #boss
     if ob1["2face"]["status"] == True:
       e5 = "\033[32mDikalahkan ✓\033[0m"
       
@@ -9709,26 +9764,39 @@ def info_musuh1():
     print(" Semut hitam     Laba-laba hitam")
     print(" 🐜 :            🕷️🕸️ :")
     print(f" Damage : {ob1["semut_hitam"]["damage"]}      Damage : {ob1["laba2_hitam"]["damage"]}")
-    print(f" Hp     : {ob1["semut_hitam"]["hp"]:<3}    Hp     : {ob1["laba2_hitam"]["hp"]:<3}")
+    print(f" Hp     : \033[32m{ob1["semut_hitam"]["hp"]:<3}\033[0m    Hp     : \033[32m{ob1["laba2_hitam"]["hp"]:<3}\033[0m")
     print(f" {e1:<12}    {e3}")
     print(" ")
     print(" Nyamuk hitam    Lalat anomali")
     print(" 🦟 :            🪰 :")
     print(f" Damage : {ob1["nyamuk_hitam"]["damage"]}      Damage : {ob1["lalat_anomali"]["damage"]}")
-    print(f" Hp     : {ob1["nyamuk_hitam"]["hp"]:<3}    Hp     : {ob1["lalat_anomali"]["hp"]:<3}")
+    print(f" Hp     : \033[32m{ob1["nyamuk_hitam"]["hp"]:<3}\033[0m    Hp     : \033[32m{ob1["lalat_anomali"]["hp"]:<3}\033[0m")
     print(f" {e2:<12}    {e4}")
     print(" ")
     print(" \033[31m[BOSS]\033[0m: \033[36m2 Face\033[0m !")
     print(" 🎭 :")
     print(f" Damage : {ob1["2face"]["damage"]}")
-    print(f" Hp : {ob1["2face"]["hp"]}")
+    print(f" Hp : \033[32m{ob1["2face"]["hp"]}\033[0m")
     print(f" {e5}")
+    print(" ")
+    print(" \033[32mNote\033[0m :\n untuk menyerang monster »[m]\n dan setelah mengalahkan semua\n monster untuk merespawn semuanya kembali »[1]\n untuk heal »[h] ")
     print(" ")
     print(" Keluar »[x]")
     cmd = _getch()
     
     if cmd == "x":
       break
+  
+def heal():
+  global rw_rbt, Hp
+  
+  if rw_rbt["plester"] >= 1:
+    if Hp < 100:
+      print(" ")
+      print(" \033[32mMenggunakan plester sukses ✓\033[0m")
+      time.sleep(0.456)
+      Hp = 100
+      rw_rbt["plester"] -= 1
     
 while True:
     
@@ -10188,6 +10256,10 @@ while True:
   elif worldpos == "rbt":
     d_rbt()
     
+    batas_lh = (pa["semut_hitam"][0], pa["semut_hitam"][1])
+    batas_yh = (pa["nyamuk_hitam"][0], pa["nyamuk_hitam"][1])
+    batas_l2b = (pa["laba2_hitam"][0], pa["laba2_hitam"][1])
+    
     ob = ruang_bawah_tanah
     ob1 = monster
     pos = (ob["userx1"], ob["usery1"])
@@ -10219,14 +10291,14 @@ while True:
     elif ob[uyr] >= ob[ry]:
       ob[uyr] = ob[ry] -1
     
-    if (ob["userx1"], ob["usery1"]) in batas_rbt:
-      ob["userx1"], ob["usery1"] = oldx, oldy
-    
     if cmd == "i":
       info_musuh1()
     
     if cmd == "p":
       info_pedang()
+    
+    if cmd == "h":
+      heal()
       
     if cmd == "m":
       if pos == (19, 0):
@@ -10239,16 +10311,36 @@ while True:
         print(" merespawn monster kembali »")
         time.sleep(28)
         ob1["semut_hitam"]["status"] = False
+        ob1["semut_hitam"]["exp"] = 35
         ob1["semut_hitam"]["reward_kunci1"] = 0
+        ob1["semut_hitam"]["damage"] = 0
+        ob1["semut_hitam"]["plester"] = 1
         ob1["nyamuk_hitam"]["status"] = False
+        ob1["nyamuk_hitam"]["exp"] = 35
         ob1["nyamuk_hitam"]["reward_kunci1"] = 0
+        ob1["nyamuk_hitam"]["damage"] = 0
+        ob1["nyamuk_hitam"]["plester"] = 1
         ob1["laba2_hitam"]["status"] = False
+        ob1["laba2_hitam"]["exp"] = 35
         ob1["laba2_hitam"]["reward_kunci1"] = 0
+        ob1["laba2_hitam"]["damage"] = 0
+        ob1["laba2_hitam"]["plester"] = 1
         ob1["lalat_anomali"]["status"] = False
+        ob1["lalat_anomali"]["exp"] = 35
         ob1["lalat_anomali"]["reward_kunci1"] = 0
+        ob1["lalat_anomali"]["damage"] = 0
+        ob1["lalat_anomali"]["plester"] = 1
         ob1["2face"]["status"] = False
-        ob1["2face"]["exp"] = 20
-        
+        ob1["2face"]["exp"] = 70
+        ob1["2face"]["plester"] = random.randint(1, 2)
+        ob1["2face"]["damage"] = 25
+    
+    if (ob["userx1"], ob["usery1"]) in batas_rbt:
+      ob["userx1"], ob["usery1"] = oldx, oldy
+    
+    if (ob["userx1"], ob["usery1"]) in wl_rbt:
+      ob["userx1"], ob["usery1"] = oldx, oldy
+    
     if cmd == "m":
       if pos == (kunci_rbt["kunci1"]["x"], kunci_rbt["kunci1"]["y"]):
         if rw_rbt["kunci1"] == kunci_rbt["need1"]:
@@ -10262,9 +10354,25 @@ while True:
           print(" ")
           print(" \033[31mKamu butuh kunci !\033[0m")
           time.sleep(0.345)
+    #penghalang alur.
     
-    if (ob["userx1"], ob["usery1"]) in wl_rbt :
-      ob["userx1"], ob["usery1"] = oldx, oldy
+    if (ob["userx1"], ob["usery1"]) == (pa["semut_hitam"][0], pa["semut_hitam"][1]):
+      if ob1["semut_hitam"]["status"] == True:
+        batas_lh = back
+      else:
+        ob["userx1"], ob["usery1"] = oldx, oldy
+    
+    if (ob["userx1"], ob["usery1"]) == (pa["nyamuk_hitam"][0], pa["nyamuk_hitam"][1]):
+      if ob1["nyamuk_hitam"]["status"] == True:
+        batas_yh = back
+      else:
+        ob["userx1"], ob["usery1"] = oldx, oldy
+        
+    if (ob["userx1"], ob["usery1"]) == (pa["laba2_hitam"][0], pa["laba2_hitam"][1]):
+      if ob1["laba2_hitam"]["status"] == True:
+        batas_lb2 = back
+      else:
+        ob["userx1"], ob["usery1"] = oldx, oldy
     
     if cmd == "m":
       if not pedang["status1"] and pos == (pedang["x1"], pedang["y1"]):
@@ -10287,7 +10395,7 @@ while True:
         print(" ")
         print(" \033[32mSukses ✓\033[0m")
         time.sleep(0.345)
-    
+        
     if cmd == "m":
       if pos == (ob1["semut_hitam"]["x"], ob1["semut_hitam"]["y"]) and not ob1["semut_hitam"]["status"]:
         if pedang["pedang1"] == 1:
@@ -10300,7 +10408,9 @@ while True:
               print(" ")
               print(" \033[32mSukses membunuh ✓\033[0m")
               rw_rbt["kunci1"] += ob1["semut_hitam"]["reward_kunci1"]
-              pedang["damage1"] += 6
+              rw_rbt["plester"] += ob1["semut_hitam"]["plester"]
+              pedang["damage1"] += ob1["semut_hitam"]["damage"]
+              exp += ob1["semut_hitam"]["exp"]
               pedang["hp1"] -= 1
               time.sleep(0.345)
               ob1["semut_hitam"]["status"] = True
@@ -10317,6 +10427,10 @@ while True:
               Hp -= ob1["semut_hitam"]["damage"]
             elif Hp <= ob1["semut_hitam"]["damage"]:
               print(" ")
+              print(" \033[32mKamu mulai menyerang semut hitam »\033[0m")
+              print(" ")
+              print(" \033[31mSemut hitam menyerang balik »\033[0m")
+              time.sleep(1.23)
               os.system("clear")
               print(" \033[33mKamu kalah !\033[0m")
               print("    \033[31mGame over\033[0m   ")
@@ -10346,7 +10460,9 @@ while True:
               print(" ")
               print(" \033[32mSukses membunuh ✓\033[0m")
               rw_rbt["kunci1"] += ob1["nyamuk_hitam"]["reward_kunci1"]
-              pedang["damage1"] += 8
+              rw_rbt["plester"] += ob1["nyamuk_hitam"]["plester"]
+              pedang["damage1"] += ob1["nyamuk_hitam"]["damage"]
+              exp += ob1["nyamuk_hitam"]["exp"]
               pedang["hp1"] -= 1
               time.sleep(0.345)
               ob1["nyamuk_hitam"]["status"] = True
@@ -10363,6 +10479,10 @@ while True:
               Hp -= ob1["nyamuk_hitam"]["damage"]
             elif Hp <= ob1["nyamuk_hitam"]["damage"]:
               print(" ")
+              print(" \033[32mKamu mulai menyerang nyamuk hitam »\033[0m")
+              print(" ")
+              print(" \033[31mNyamuk hitam menyerang balik »\033[0m")
+              time.sleep(1.23)
               os.system("clear")
               print(" \033[33mKamu kalah !\033[0m")
               print("    \033[31mGame over\033[0m   ")
@@ -10392,7 +10512,9 @@ while True:
               print(" ")
               print(" \033[32mSukses membunuh ✓\033[0m")
               rw_rbt["kunci1"] += ob1["laba2_hitam"]["reward_kunci1"]
-              pedang["damage1"] += 20
+              rw_rbt["plester"] += ob1["laba2_hitam"]["plester"]
+              pedang["damage1"] += ob1["laba2_hitam"]["damage"]
+              exp += ob1["laba2_hitam"]["exp"]
               pedang["hp1"] -= 1
               time.sleep(0.345)
               ob1["laba2_hitam"]["status"] = True
@@ -10409,6 +10531,10 @@ while True:
               Hp -= ob1["laba2_hitam"]["damage"]
             elif Hp <= ob1["laba2_hitam"]["damage"]:
               print(" ")
+              print(" \033[32mKamu mulai menyerang laba-laba hitam »\033[0m")
+              print(" ")
+              print(" \033[31mLaba-laba hitam menyerang balik »\033[0m")
+              time.sleep(1.23)
               os.system("clear")
               print(" \033[33mKamu kalah !\033[0m")
               print("    \033[31mGame over\033[0m   ")
@@ -10438,7 +10564,9 @@ while True:
               print(" ")
               print(" \033[32mSukses membunuh ✓\033[0m")
               rw_rbt["kunci1"] += ob1["lalat_anomali"]["reward_kunci1"]
-              pedang["damage1"] += 40
+              rw_rbt["plester"] += ob1["lalat_anomali"]["plester"]
+              pedang["damage1"] += ob1["lalat_anomali"]["damage"]
+              exp += ob1["lalat_anomali"]["exp"]
               pedang["hp1"] -= 1
               time.sleep(0.345)
               ob1["lalat_anomali"]["status"] = True
@@ -10455,6 +10583,10 @@ while True:
               Hp -= ob1["lalat_anomali"]["damage"]
             elif Hp <= ob1["lalat_anomali"]["damage"]:
               print(" ")
+              print(" \033[32mKamu mulai menyerang lalat anomali »\033[0m")
+              print(" ")
+              print(" \033[31mLalat anomali menyerang balik »\033[0m")
+              time.sleep(1.23)
               os.system("clear")
               print(" \033[33mKamu kalah !\033[0m")
               print("    \033[31mGame over\033[0m   ")
@@ -10485,8 +10617,9 @@ while True:
               print(" ")
               print(" \033[32mSukses membunuh BOSS ✓\033[0m")
               rw_rbt["pil1"] += ob1["2face"]["reward_pil1"]
+              rw_rbt["plester"] += ob1["2face"]["plester"]
               exp += ob1["2face"]["exp"]
-              pedang["damage1"] += 60
+              pedang["damage1"] += ob1["2face"]["damage"]
               pedang["hp1"] -= 1
               time.sleep(0.345)
               ob1["2face"]["status"] = True
@@ -10503,6 +10636,10 @@ while True:
               Hp -= ob1["2face"]["damage"]
             elif Hp <= ob1["2face"]["damage"]:
               print(" ")
+              print(" \033[32mKamu mulai menyerang BOSS : 2 Face »\033[0m")
+              print(" ")
+              print(" \033[31mBOSS : 2 Face hitam menyerang balik »\033[0m")
+              time.sleep(1.23)
               os.system("clear")
               print(" \033[33mKamu kalah !\033[0m")
               print("    \033[31mGame over\033[0m   ")
