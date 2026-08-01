@@ -9922,7 +9922,7 @@ while True:
     sandi = "".join(random.choices(string.ascii_letters + string.digits, k=9))
     
     print(" ")
-    print("\033[32mNote\033[0m : \033[36mProgres Game » [70%]\033[0m")
+    print("\033[32mNote\033[0m : \033[36mProgres Game » [65%]\033[0m")
     print(" ")
     print(" \033[31mGame ini tidak memiliki fitur save !\033[0m")
     print(" ")
